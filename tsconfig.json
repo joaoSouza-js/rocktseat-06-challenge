@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"lib": ["ES2024"],
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+		"module": "nodenext",
+		"moduleResolution": "NodeNext",
+		"verbatimModuleSyntax": false,
+		"target": "ES2024",
+		"types": ["node"]
+	}
+}
