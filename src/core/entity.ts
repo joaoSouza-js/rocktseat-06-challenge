@@ -1,10 +1,10 @@
-import { UniqueEntityId } from "./unique-entiity-id.js"
+import { UniqueEntityId } from "./unique-entity-id.js"
 
-export class Entity<T> {
-    readonly props: T
+export abstract class Entity<T> {
+    protected readonly props: T
     private _id: UniqueEntityId
 
-    constructor(props: T, _id?: UniqueEntityId) {
+    protected constructor(props: T, _id?: UniqueEntityId) {
         const id = _id ?? UniqueEntityId.create()
         this.props = props
         this._id = id

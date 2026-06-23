@@ -20,9 +20,16 @@ export class CPFValueObject {
 
     }
 
+    static rehydrate(cpf: string): CPFValueObject {
+        const cpfFormatted = removeNonDigits(cpf)
+        return new CPFValueObject(cpfFormatted)
+    }
+
+
     equals(other: CPFValueObject): boolean {
         return this.value === other.value;
     }
+
 
     get cpf(): string {
         return this.value
