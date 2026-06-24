@@ -1,26 +1,26 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permisions-preset.js";
 import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
+import { DelivererRepositoryInMemory } from "@/test/repositories/deliverer-repository-in-memory.js";
 import { FakeHasher } from "@/test/services/fake-hasher.js";
 import type { AccountRepository } from "../repositories/account-repository.js";
+import type { DelivererRepository } from "../repositories/deliverer-repository.js";
 import type { HasherGenerator } from "../services/hasher-generator.js";
-import {
-    CreateAccountUseCase,
-    type CreateAccountUseCaseInput,
-} from "./create-account.js";
+import type { CreateAccountUseCaseInput } from "./create-account.js";
+import { CreateDelivererUseCase } from "./create-deliverer.js";
 
-describe("create account use case", () => {
+describe("create deliverer use case", () => {
     let accountRepository: AccountRepository;
     let hasherGenerator: HasherGenerator;
-    let sut: CreateAccountUseCase;
-
+    let sut: CreateDelivererUseCase;
+    let delivererRepository: DelivererRepository;
     beforeEach(() => {
         accountRepository = new AccountRepositoryInMemory();
         hasherGenerator = new FakeHasher();
-
-        sut = new CreateAccountUseCase({
+        delivererRepository = new DelivererRepositoryInMemory();
+        sut = new CreateDelivererUseCase({
             repositories: {
                 accountRepository,
+                delivererRepository,
             },
             services: {
                 hasherGenerator,
@@ -28,15 +28,19 @@ describe("create account use case", () => {
         });
     });
 
-    it("should create an account with user permissions", async () => {
+    it("should create an account and persist on database", async () => {
         const input: CreateAccountUseCaseInput = {
             cpf: "529.982.247-25",
             password: "123456",
             name: "Pedro",
         };
 
-        const account = await sut.execute(input);
+        const response = await sut.execute(input);
 
-        expect(account.permissions).toEqual(PermissionPresets.user);
+        const deliverOnList = await delivererRepository.findById(
+            response.deliverer.id,
+        );
+
+        expect(deliverOnList).toBeTruthy();
     });
 });

@@ -1,8 +1,7 @@
-import { Account } from "@/domain/enterprise/entities/account.js";
-import { RoleValueObject } from "@/domain/enterprise/entities/value-objects/account-role.js";
-import { CPFValueObject } from "@/domain/enterprise/entities/value-objects/cpf/cpf-value-object.js";
-import { ResourceAlreadyExist } from "@/domain/error/resource-already-exist.js";
+import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permisions-preset.js";
+import type { Account } from "@/domain/enterprise/entities/account-entity.js";
 import type { AccountRepository } from "../repositories/account-repository.js";
+import { AccountCreatorService } from "../services/account-creator.js";
 import type { HasherGenerator } from "../services/hasher-generator.js";
 
 interface Repositories {
@@ -18,7 +17,6 @@ interface AccountUseCaseDeps {
 
 export interface CreateAccountUseCaseInput {
     cpf: string;
-    role: string;
     password: string;
     name: string;
 }
@@ -26,32 +24,22 @@ export interface CreateAccountUseCaseInput {
 export class CreateAccountUseCase {
     private accountRepository: AccountRepository;
     private hasherGenerator: HasherGenerator;
+    private accountCreatorService: AccountCreatorService;
 
     constructor(deps: AccountUseCaseDeps) {
         this.accountRepository = deps.repositories.accountRepository;
         this.hasherGenerator = deps.services.hasherGenerator;
+        this.accountCreatorService = new AccountCreatorService(
+            this.accountRepository,
+            this.hasherGenerator,
+        );
     }
 
     async execute(input: CreateAccountUseCaseInput): Promise<Account> {
-        const passwordHashed = this.hasherGenerator.generate(input.password);
-        const cpf = CPFValueObject.create(input.cpf);
-        const role = RoleValueObject.create(input.role);
-
-        const accountAlreadyExist = await this.accountRepository.findByCpf(cpf);
-
-        if (accountAlreadyExist) {
-            throw new ResourceAlreadyExist(input.cpf);
-        }
-
-        const account = Account.create({
-            cpf: cpf,
-            name: input.name,
-            passwordHash: passwordHashed,
-            role: role,
+        const account = this.accountCreatorService.create({
+            user: input,
+            permissions: PermissionPresets.user,
         });
-
-        await this.accountRepository.create(account);
-
         return account;
     }
 }

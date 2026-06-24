@@ -46,7 +46,6 @@ describe("authentication use case ", () => {
     });
 
     it("should throw when account does not exist", async () => {
-
         const password = "password";
         const passwordHash = hasherGenerator.generate(password);
         const account = makeAccount({
@@ -56,7 +55,7 @@ describe("authentication use case ", () => {
         await expect(
             sut.execute({
                 cpf: account.cpf.cpf,
-                password: passwordHash
+                password: passwordHash,
             }),
         ).rejects.toThrow(CredentialsInvalid);
     });

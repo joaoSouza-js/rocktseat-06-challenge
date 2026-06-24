@@ -1,7 +1,7 @@
 import type { UniqueEntityId } from "@/core/unique-entity-id.js";
 import type { AccountRepository } from "@/domain/application/repositories/account-repository.js";
-import type { Account } from "@/domain/enterprise/entities/account.js";
-import type { CPFValueObject } from "@/domain/enterprise/entities/value-objects/cpf/cpf-value-object.js";
+import type { CPFValueObject } from "@/domain/enterprise/entities/account/value-objects/cpf/cpf-value-object.js";
+import type { Account } from "@/domain/enterprise/entities/account-entity.js";
 
 export class AccountRepositoryInMemory implements AccountRepository {
     findByCpf(cpf: CPFValueObject): Promise<Account | null> {
