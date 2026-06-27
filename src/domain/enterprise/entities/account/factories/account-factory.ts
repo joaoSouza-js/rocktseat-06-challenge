@@ -1,4 +1,4 @@
-import { Account, type CreateAccountInput } from "../../account-entity.js";
+import { Account, type CreateAccountInput } from "../account-entity.js";
 import { PermissionPresets } from "../presets/permisions-preset.js";
 
 export const AccountFactory = {

@@ -1,5 +1,5 @@
+import type { Account } from "@/domain/enterprise/entities/account/account-entity.js";
 import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permisions-preset.js";
-import type { Account } from "@/domain/enterprise/entities/account-entity.js";
 import { Deliverer } from "@/domain/enterprise/entities/deliverer/deliverer-entity.js";
 import { AvailabilityValueObject } from "@/domain/enterprise/entities/deliverer/value-objects/availability.js";
 import { ScheduleValueObject } from "@/domain/enterprise/entities/deliverer/value-objects/schedule.js";
@@ -24,6 +24,7 @@ export interface CreateDelivererUseCaseInput {
     cpf: string;
     password: string;
     name: string;
+    phone: string
 }
 export interface CreateDelivererUseCaseResponse {
     account: Account;
@@ -63,7 +64,7 @@ export class CreateDelivererUseCase {
 
         return {
             account,
-            deliverer: deliverer
+            deliverer: deliverer,
         };
     }
 }

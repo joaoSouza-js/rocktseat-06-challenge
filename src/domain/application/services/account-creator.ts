@@ -1,17 +1,18 @@
+import { Account } from "@/domain/enterprise/entities/account/account-entity.js";
 import type { PermissionType } from "@/domain/enterprise/entities/account/enums/permissions-type.js";
 import { CPFValueObject } from "@/domain/enterprise/entities/account/value-objects/cpf/cpf-value-object.js";
-import { Account } from "@/domain/enterprise/entities/account-entity.js";
+import { PhoneValueObject } from "@/domain/enterprise/entities/value-objects/phone.js";
 import { ResourceAlreadyExist } from "@/domain/error/resource-already-exist.js";
 import type { AccountRepository } from "../repositories/account-repository.js";
 import type { HasherGenerator } from "./hasher-generator.js";
-
 
 export interface AccountCreatorServiceRequest {
     user: {
         cpf: string;
         password: string;
         name: string;
-    }
+        phone: string;
+    };
     permissions: PermissionType[];
 }
 
@@ -22,7 +23,7 @@ export class AccountCreatorService {
     ) { }
 
     async create(input: AccountCreatorServiceRequest): Promise<Account> {
-        const { permissions, user } = input
+        const { permissions, user } = input;
         const passwordHashed = this.hasherGenerator.generate(user.password);
 
         const cpf = CPFValueObject.create(user.cpf);
@@ -33,11 +34,14 @@ export class AccountCreatorService {
             throw new ResourceAlreadyExist(user.cpf);
         }
 
+        const phone = PhoneValueObject.create(input.user.phone)
+
         const account = Account.create({
             cpf,
             name: user.name,
             passwordHash: passwordHashed,
             permissions: permissions,
+            phone: phone,
         });
 
         await this.accountRepository.create(account);

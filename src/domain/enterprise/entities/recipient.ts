@@ -1,13 +1,16 @@
 import { Entity } from "@/core/entity.js";
+import type { PhoneValueObject } from "./value-objects/phone.js";
 
 interface RecipientProps {
     name: string;
     address: string;
+    phone: PhoneValueObject;
 }
 
 interface CreateRecipientInput {
     name: string;
     address: string;
+    phone: PhoneValueObject;
 }
 
 export class Recipient extends Entity<RecipientProps> {
@@ -15,6 +18,7 @@ export class Recipient extends Entity<RecipientProps> {
         return new Recipient({
             name: input.name,
             address: input.address,
+            phone: input.phone,
         });
     }
 
@@ -28,6 +32,10 @@ export class Recipient extends Entity<RecipientProps> {
 
     get address(): string {
         return this.props.address;
+    }
+
+    get phone(): PhoneValueObject {
+        return this.props.phone
     }
 
     changeName(name: string): void {

@@ -1,5 +1,5 @@
+import type { Account } from "@/domain/enterprise/entities/account/account-entity.js";
 import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permisions-preset.js";
-import type { Account } from "@/domain/enterprise/entities/account-entity.js";
 import type { AccountRepository } from "../repositories/account-repository.js";
 import { AccountCreatorService } from "../services/account-creator.js";
 import type { HasherGenerator } from "../services/hasher-generator.js";
@@ -19,6 +19,7 @@ export interface CreateAccountUseCaseInput {
     cpf: string;
     password: string;
     name: string;
+    phone: string
 }
 
 export class CreateAccountUseCase {

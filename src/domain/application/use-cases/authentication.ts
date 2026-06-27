@@ -1,5 +1,5 @@
+import type { Account } from "@/domain/enterprise/entities/account/account-entity.js";
 import { CPFValueObject } from "@/domain/enterprise/entities/account/value-objects/cpf/cpf-value-object.js";
-import type { Account } from "@/domain/enterprise/entities/account-entity.js";
 import { CredentialsInvalid } from "@/domain/error/credentials-invalid.js";
 import type { AccountRepository } from "../repositories/account-repository.js";
 import type { HasherVerify } from "../services/hasher-verify.js";

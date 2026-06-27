@@ -33,6 +33,8 @@ describe("create deliverer use case", () => {
             cpf: "529.982.247-25",
             password: "123456",
             name: "Pedro",
+            phone: "+5511987654321",
+
         };
 
         const response = await sut.execute(input);

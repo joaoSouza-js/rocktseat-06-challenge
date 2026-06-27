@@ -27,6 +27,7 @@ describe("create account service ", () => {
                 cpf: "529.982.247-25",
                 name: "pedro",
                 password: "123456",
+                phone: "+5511987654321",
             },
             permissions: PermissionPresets.user,
         };
@@ -41,6 +42,7 @@ describe("create account service ", () => {
                 cpf: "529.982.247-25",
                 name: "pedro",
                 password: "123456",
+                phone: "+5511987654321",
             },
             permissions: PermissionPresets.user,
         };
@@ -58,6 +60,7 @@ describe("create account service ", () => {
                 cpf: "529.982.247-25",
                 name: "pedro",
                 password: "123456",
+                phone: "+5511987654321",
             },
             permissions: PermissionPresets.user,
         };

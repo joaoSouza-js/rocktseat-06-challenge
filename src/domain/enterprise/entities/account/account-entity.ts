@@ -1,10 +1,12 @@
 import { Entity } from "@/core/entity.js";
 import type { PermissionType } from "@/domain/enterprise/entities/account/enums/permissions-type.js";
-import type { CPFValueObject } from "./account/value-objects/cpf/cpf-value-object.js";
+import type { PhoneValueObject } from "../value-objects/phone.js";
+import type { CPFValueObject } from "./value-objects/cpf/cpf-value-object.js";
 
 export interface AccountProps {
     name: string;
     cpf: CPFValueObject;
+    phone: PhoneValueObject;
     passwordHash: string;
     permissions: PermissionType[];
 }
@@ -12,6 +14,7 @@ export interface AccountProps {
 export interface CreateAccountInput {
     name: string;
     cpf: CPFValueObject;
+    phone: PhoneValueObject;
     passwordHash: string;
     permissions?: PermissionType[];
 }
@@ -21,6 +24,7 @@ export class Account extends Entity<AccountProps> {
         return new Account({
             cpf: input.cpf,
             name: input.name,
+            phone: input.phone,
             passwordHash: input.passwordHash,
             permissions: input.permissions ?? [],
         });
