@@ -3,7 +3,7 @@ import type { UniqueEntityId } from "@/core/unique-entity-id.js";
 import type { AvailabilityValueObject } from "./value-objects/availability.js";
 import type { ScheduleValueObject } from "./value-objects/schedule.js";
 
-interface DelivererProps {
+export interface DelivererProps {
     accountId: UniqueEntityId;
     schedule: ScheduleValueObject;
     availability: AvailabilityValueObject;

@@ -1,8 +1,8 @@
 import { ApplicationError } from "./application-error.js";
 
 export class ResourceNotFound extends ApplicationError {
-    constructor(resource: string) {
-        super(`resource ${resource} already exist please provide a new one`)
+    constructor(resource: string, data?: string) {
+        super(`resource ${resource} ${data}  was deleted or not exist`)
         this.name = this.constructor.name
     }
 } 

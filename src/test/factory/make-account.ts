@@ -6,6 +6,7 @@ import {
 } from "@/domain/enterprise/entities/account/account-entity.js";
 import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permisions-preset.js";
 import { CPFValueObject } from "@/domain/enterprise/entities/account/value-objects/cpf/cpf-value-object.js";
+import { PhoneValueObject } from "@/domain/enterprise/entities/value-objects/phone.js";
 
 interface makeAccountProps extends Partial<AccountProps> { }
 
@@ -20,6 +21,7 @@ export function makeAccount(props: makeAccountProps): Account {
         name: props.name ?? name,
         passwordHash: props.passwordHash ?? password,
         permissions,
+        phone: PhoneValueObject.create("+5511987654321")
     });
 
     return account;

@@ -1,7 +1,7 @@
 import { Entity } from "@/core/entity.js";
 import type { PhoneValueObject } from "./value-objects/phone.js";
 
-interface RecipientProps {
+export interface RecipientProps {
     name: string;
     address: string;
     phone: PhoneValueObject;
