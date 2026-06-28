@@ -8,22 +8,22 @@ import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/
 import { AccountRepository } from "../../repositories/account-repository.js";
 import { DeliverRepository } from "../../repositories/deliver-repository.js";
 import { DelivererRepository } from "../../repositories/deliverer-repository.js";
-import { MarkDeliveredPackageUseCase } from "./mark-delivered-package.js";
 import { makeDeliver } from "@/test/factory/make-deliver.js";
 import { DeliverStatus } from "@/domain/enterprise/entities/deliver.js";
+import { MarkDeliverReturnedUseCase } from "./mark-deliver-returned.js";
 
-describe("create Deliver use case ", () => {
+describe("mark deliver returned use case ", () => {
     let deliverRepository: DeliverRepository;
     let delivererRepository: DelivererRepository;
     let accountRepository: AccountRepository
-    let sut: MarkDeliveredPackageUseCase;
+    let sut: MarkDeliverReturnedUseCase;
 
     beforeEach(() => {
         deliverRepository = new DeliverRepositoryInMemory();
         delivererRepository = new DelivererRepositoryInMemory();
         accountRepository = new AccountRepositoryInMemory();
 
-        sut = new MarkDeliveredPackageUseCase({
+        sut = new MarkDeliverReturnedUseCase({
             repositories: {
                 deliverRepository: deliverRepository,
                 delivererRepository: delivererRepository,
@@ -32,7 +32,7 @@ describe("create Deliver use case ", () => {
         });
     });
 
-    it("should update deliver as delivered ", async () => {
+    it("should update deliver as returned ", async () => {
         const account = makeAccount({
             permissions: PermissionPresets.deliver
         })
@@ -52,12 +52,12 @@ describe("create Deliver use case ", () => {
 
         });
 
-        expect(response.deliver.status).toEqual(DeliverStatus.DELIVERED)
+        expect(response.deliver.status).toEqual(DeliverStatus.RETURNED)
 
 
     });
 
-    it("should update deliver as delivered on database", async () => {
+    it("should update deliver as returned on database", async () => {
         const account = makeAccount({
             permissions: PermissionPresets.deliver
         })
@@ -79,7 +79,7 @@ describe("create Deliver use case ", () => {
 
         const deliverOnDb = await deliverRepository.findById(response.deliver.id)
         expect(deliverOnDb).toBeTruthy()
-        expect(deliverOnDb?.status).toEqual(DeliverStatus.DELIVERED)
+        expect(deliverOnDb?.status).toEqual(DeliverStatus.RETURNED)
 
     })
 

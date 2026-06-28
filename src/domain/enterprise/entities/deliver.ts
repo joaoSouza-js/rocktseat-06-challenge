@@ -6,7 +6,7 @@ export enum DeliverStatus {
     READY = "READY",          // ready to be delivered / picked up
     PROGRESS = "PROGRESS",    // currently in delivery
     DELIVERED = "DELIVERED",  // finished
-    REJECTED = "REJECTED"
+    RETURNED = "RETURNED"
 }
 
 export interface DeliverProps {

@@ -1,0 +1,22 @@
+import { ensureExists } from "@/core/guards/ensure-exist.js";
+import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { Account } from "@/domain/enterprise/entities/account/account-entity.js";
+import { AccountRepository } from "../repositories/account-repository.js";
+import { DelivererRepository } from "../repositories/deliverer-repository.js";
+
+export class DelivererAccountService {
+    constructor(
+        private delivererRepository: DelivererRepository,
+        private accountRepository: AccountRepository,
+    ) { }
+
+    async fromDelivererId(delivererId: UniqueEntityId): Promise<Account> {
+        const deliverer = await this.delivererRepository.findById(delivererId);
+        ensureExists(deliverer, "Deliverer");
+
+        const account = await this.accountRepository.findById(deliverer.accountId);
+        ensureExists(account, "Account");
+
+        return account;
+    }
+}

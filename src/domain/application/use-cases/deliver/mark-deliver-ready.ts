@@ -5,6 +5,7 @@ import type { DeliverRepository } from "../../repositories/deliver-repository.js
 import type { DelivererRepository } from "../../repositories/deliverer-repository.js";
 import { AccountRepository } from "../../repositories/account-repository.js";
 import { DeliverUpdatePolicy } from "../../policies/deliver-update-policy.js";
+import { DelivererAccountService } from "../../services/deliverer-account.js";
 
 interface Repositories {
     deliverRepository: DeliverRepository;
@@ -16,52 +17,50 @@ interface DeliverUseCaseDeps {
     repositories: Repositories;
 }
 
-export interface MarkDeliveredPackageUseCaseInput {
+export interface MarkReadyPackageUseCaseInput {
     delivererId: string;
     deliverId: string;
 }
-export interface MarkDeliveredPackageUseCaseResponse {
+export interface MarkReadyPackageUseCaseResponse {
     deliver: Deliver;
 }
-export class MarkDeliveredPackageUseCase {
+export class MarkReadyPackageUseCase {
     private deliverRepository: DeliverRepository;
     private delivererRepository: DelivererRepository;
     private accountRepository: AccountRepository
+    private delivererAccountService: DelivererAccountService
+
 
     constructor(deps: DeliverUseCaseDeps) {
         this.deliverRepository = deps.repositories.deliverRepository;
         this.delivererRepository = deps.repositories.delivererRepository;
         this.accountRepository = deps.repositories.accountRepository
+        this.delivererAccountService = new DelivererAccountService(
+            this.delivererRepository, this.accountRepository
+        );
+
     }
 
     async execute(
-        input: MarkDeliveredPackageUseCaseInput,
-    ): Promise<MarkDeliveredPackageUseCaseResponse> {
+        input: MarkReadyPackageUseCaseInput,
+    ): Promise<MarkReadyPackageUseCaseResponse> {
         const delivererId = UniqueEntityId.rehydrate(input.delivererId);
-        const deliverer = await this.delivererRepository.findById(delivererId);
-
-        ensureExists(deliverer, "Deliverer");
-
         const deliverId = UniqueEntityId.rehydrate(input.deliverId);
-        const accountId = deliverer.accountId
 
-        const deliverPromise = this.deliverRepository.findById(deliverId);
-        const accountPromise = this.accountRepository.findById(accountId);
-
-        const [deliver, account] = await Promise.all([deliverPromise, accountPromise]);
-
+        const account = await this.delivererAccountService.fromDelivererId(delivererId);
+        const deliver = await this.deliverRepository.findById(deliverId);
         ensureExists(deliver, "Deliver");
-        ensureExists(account, "Account");
 
-        DeliverUpdatePolicy.assertCanUpdate({ account, deliverer, deliver });
+        DeliverUpdatePolicy.assertCanUpdate({ account, delivererId, deliver });
 
-        deliver.changeStatus(DeliverStatus.DELIVERED)
+        deliver.changeStatus(DeliverStatus.READY)
 
         await this.deliverRepository.update(deliver);
 
         return {
             deliver
         }
+
 
     }
 }
