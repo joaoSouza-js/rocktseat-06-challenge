@@ -8,9 +8,13 @@ export const PermissionPresets = {
     ],
 
     deliverer: [
-        PermissionType.DELIVERY_CREATE,
         PermissionType.DELIVERER_CREATE,
-        PermissionType.DELIVERY_UPDATE,
+        PermissionType.DELIVERER_UPDATE,
+    ],
+
+    deliver: [
+        PermissionType.DELIVER_UPDATE,
+        PermissionType.DELIVER_CREATE,
     ],
 
     user: [

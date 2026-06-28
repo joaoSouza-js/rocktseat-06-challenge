@@ -4,14 +4,14 @@ import { makeRecipient } from "@/test/factory/make-recipient.js";
 import { DeliverRepositoryInMemory } from "@/test/repositories/deliver.repository-in-memory.js";
 import { DelivererRepositoryInMemory } from "@/test/repositories/deliverer-repository-in-memory.js";
 import { RecipientRepositoryInMemory } from "@/test/repositories/recipient-repository-in-memory.js";
-import type { DeliverRepository } from "../repositories/deliver-repository.js";
-import type { DelivererRepository } from "../repositories/deliverer-repository.js";
-import { CreateDeliverUseCase } from "./create-deliver.js";
 import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
-import { RecipientRepository } from "../repositories/recipient-repository.js";
-import { AccountRepository } from "../repositories/account-repository.js";
 import { makeAccount } from "@/test/factory/make-account.js";
 import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permission-preset.js";
+import { AccountRepository } from "../../repositories/account-repository.js";
+import { DeliverRepository } from "../../repositories/deliver-repository.js";
+import { DelivererRepository } from "../../repositories/deliverer-repository.js";
+import { RecipientRepository } from "../../repositories/recipient-repository.js";
+import { CreateDeliverUseCase } from "./create-deliver.js";
 
 describe("create Deliver use case ", () => {
     let deliverRepository: DeliverRepository;

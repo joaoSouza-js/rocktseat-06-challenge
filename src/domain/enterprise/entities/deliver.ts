@@ -5,10 +5,11 @@ export enum DeliverStatus {
     PENDING = "PENDING",      // not ready yet (business rules not satisfied)
     READY = "READY",          // ready to be delivered / picked up
     PROGRESS = "PROGRESS",    // currently in delivery
-    DELIVERED = "DELIVERED"   // finished
+    DELIVERED = "DELIVERED",  // finished
+    REJECTED = "REJECTED"
 }
 
-interface DeliverProps {
+export interface DeliverProps {
     delivererId: UniqueEntityId,
     recipientId: UniqueEntityId,
     status: DeliverStatus,
@@ -51,5 +52,9 @@ export class Deliver extends Entity<DeliverProps> {
 
     get address(): string {
         return this.props.address
+    }
+
+    get status(): DeliverStatus {
+        return this.props.status
     }
 }

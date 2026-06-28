@@ -1,11 +1,11 @@
 import { ensureExists } from "@/core/guards/ensure-exist.js";
 import { UniqueEntityId } from "@/core/unique-entity-id.js";
 import { Deliver } from "@/domain/enterprise/entities/deliver.js";
-import type { DeliverRepository } from "../repositories/deliver-repository.js";
-import type { DelivererRepository } from "../repositories/deliverer-repository.js";
-import type { RecipientRepository } from "../repositories/recipient-repository.js";
-import { AccountRepository } from "../repositories/account-repository.js";
-import { AdministratorCreationPolicy } from "../policies/administrator-creation-policy.js";
+import type { DeliverRepository } from "../../repositories/deliver-repository.js";
+import type { DelivererRepository } from "../../repositories/deliverer-repository.js";
+import type { RecipientRepository } from "../../repositories/recipient-repository.js";
+import { AccountRepository } from "../../repositories/account-repository.js";
+import { AdministratorCreationPolicy } from "../../policies/administrator-creation-policy.js";
 
 interface Repositories {
     deliverRepository: DeliverRepository;
