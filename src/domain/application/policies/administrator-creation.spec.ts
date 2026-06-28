@@ -1,17 +1,17 @@
 import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permission-preset.js";
 import { makeAccount } from "@/test/factory/make-account.js";
 import { describe, expect, it } from "vitest";
-import { createDeliverPolicy } from "./create-deliver-policy.js";
 import { CredentialsInvalid } from "@/domain/error/credentials-invalid.js";
+import { AdministratorCreationPolicy } from "./administrator-creation-policy.js";
 
-describe("create deliver policy", () => {
-    it("should be able to create a deliver", () => {
+describe("administrator creation policy", () => {
+    it("should create a resource without error", () => {
         const account = makeAccount({
             permissions: PermissionPresets.admin
         })
 
         expect(() => {
-            createDeliverPolicy.assertCanCreate(account);
+            AdministratorCreationPolicy.assertCanCreate(account);
         }).not.toThrow();
     });
 
@@ -20,6 +20,6 @@ describe("create deliver policy", () => {
             permissions: PermissionPresets.user
         })
 
-        expect(() => createDeliverPolicy.assertCanCreate(account)).toThrow(CredentialsInvalid);
+        expect(() => AdministratorCreationPolicy.assertCanCreate(account)).toThrow(CredentialsInvalid);
     });
 });

@@ -1,9 +1,15 @@
 import { Recipient } from "@/domain/enterprise/entities/recipient.js";
 import { PhoneValueObject } from "@/domain/enterprise/entities/value-objects/phone.js";
 import type { RecipientRepository } from "../repositories/recipient-repository.js";
+import { AccountRepository } from "../repositories/account-repository.js";
+import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { AdministratorCreationPolicy } from "../policies/administrator-creation-policy.js";
+import { ensureExists } from "@/core/guards/ensure-exist.js";
 
 interface Repositories {
     recipientRepository: RecipientRepository;
+    accountRepository: AccountRepository;
+
 }
 
 interface AccountUseCaseDeps {
@@ -11,6 +17,7 @@ interface AccountUseCaseDeps {
 }
 
 export interface CreateRecipientUseCaseInput {
+    actorId: string
     address: string;
     name: string;
     phone: string;
@@ -21,14 +28,24 @@ export interface CreateRecipientUseCaseResponse {
 
 export class CreateRecipientUseCase {
     private recipientRepository: RecipientRepository;
+    private accountRepository: AccountRepository;
 
     constructor(deps: AccountUseCaseDeps) {
         this.recipientRepository = deps.repositories.recipientRepository;
+        this.accountRepository = deps.repositories.accountRepository;
+
     }
 
     async execute(
         input: CreateRecipientUseCaseInput,
     ): Promise<CreateRecipientUseCaseResponse> {
+
+        const actorId = UniqueEntityId.rehydrate(input.actorId);
+        const actorAccount = await this.accountRepository.findById(actorId);
+
+        ensureExists(actorAccount, "Account");
+        AdministratorCreationPolicy.assertCanCreate(actorAccount);
+
         const phone = PhoneValueObject.create(input.phone);
         const recipient = Recipient.create({
             address: input.address,

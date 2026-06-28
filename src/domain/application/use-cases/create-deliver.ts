@@ -5,7 +5,7 @@ import type { DeliverRepository } from "../repositories/deliver-repository.js";
 import type { DelivererRepository } from "../repositories/deliverer-repository.js";
 import type { RecipientRepository } from "../repositories/recipient-repository.js";
 import { AccountRepository } from "../repositories/account-repository.js";
-import { createDeliverPolicy } from "../policies/create-deliver-policy.js";
+import { AdministratorCreationPolicy } from "../policies/administrator-creation-policy.js";
 
 interface Repositories {
     deliverRepository: DeliverRepository;
@@ -61,9 +61,7 @@ export class CreateDeliverUseCase {
         ensureExists(deliverer, "Deliverer");
         ensureExists(account, "Account");
 
-        createDeliverPolicy.assertCanCreate(account)
-
-
+        AdministratorCreationPolicy.assertCanCreate(account)
 
         const deliver = Deliver.create({
             address: input.address,

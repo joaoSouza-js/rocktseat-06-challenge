@@ -5,8 +5,8 @@ import { FakeHasher } from "@/test/services/fake-hasher.js";
 import type { AccountRepository } from "../repositories/account-repository.js";
 import type { DelivererRepository } from "../repositories/deliverer-repository.js";
 import type { HasherGenerator } from "../services/hasher-generator.js";
-import type { CreateAccountUseCaseInput } from "./create-account.js";
-import { CreateDelivererUseCase } from "./create-deliverer.js";
+import { CreateDelivererUseCase, CreateDelivererUseCaseInput } from "./create-deliverer.js";
+import { makeAccount } from "@/test/factory/make-account.js";
 
 describe("create deliverer use case", () => {
     let accountRepository: AccountRepository;
@@ -28,8 +28,11 @@ describe("create deliverer use case", () => {
         });
     });
 
-    it("should create an account and persist on database", async () => {
-        const input: CreateAccountUseCaseInput = {
+    it("should create and account and persist on database", async () => {
+        const account = makeAccount()
+        await accountRepository.create(account);
+        const input: CreateDelivererUseCaseInput = {
+            actorId: account.id.toString(),
             cpf: "529.982.247-25",
             password: "123456",
             name: "Pedro",

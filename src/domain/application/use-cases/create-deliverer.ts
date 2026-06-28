@@ -7,6 +7,9 @@ import type { AccountRepository } from "../repositories/account-repository.js";
 import type { DelivererRepository } from "../repositories/deliverer-repository.js";
 import { AccountCreatorService } from "../services/account-creator.js";
 import type { HasherGenerator } from "../services/hasher-generator.js";
+import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { ensureExists } from "@/core/guards/ensure-exist.js";
+import { AdministratorCreationPolicy } from "../policies/administrator-creation-policy.js";
 
 interface Repositories {
     accountRepository: AccountRepository;
@@ -25,6 +28,7 @@ export interface CreateDelivererUseCaseInput {
     password: string;
     name: string;
     phone: string
+    actorId: string
 }
 export interface CreateDelivererUseCaseResponse {
     account: Account;
@@ -49,6 +53,12 @@ export class CreateDelivererUseCase {
     async execute(
         input: CreateDelivererUseCaseInput,
     ): Promise<CreateDelivererUseCaseResponse> {
+        const actorId = UniqueEntityId.rehydrate(input.actorId);
+        const actorAccount = await this.accountRepository.findById(actorId);
+
+        ensureExists(actorAccount, "Account");
+        AdministratorCreationPolicy.assertCanCreate(actorAccount);
+
         const account = await this.accountCreatorService.create({
             user: input,
             permissions: PermissionPresets.deliverer,
