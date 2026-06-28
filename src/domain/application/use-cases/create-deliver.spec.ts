@@ -7,24 +7,31 @@ import { RecipientRepositoryInMemory } from "@/test/repositories/recipient-repos
 import type { DeliverRepository } from "../repositories/deliver-repository.js";
 import type { DelivererRepository } from "../repositories/deliverer-repository.js";
 import { CreateDeliverUseCase } from "./create-deliver.js";
+import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
+import { RecipientRepository } from "../repositories/recipent-repository.js";
+import { AccountRepository } from "../repositories/account-repository.js";
+import { makeAccount } from "@/test/factory/make-account.js";
+import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permisions-preset.js";
 
 describe("create Deliver use case ", () => {
     let deliverRepository: DeliverRepository;
     let delivererRepository: DelivererRepository;
-    let recipientRepository: RecipientRepositoryInMemory;
-
+    let recipientRepository: RecipientRepository;
+    let accountRepository: AccountRepository
     let sut: CreateDeliverUseCase;
 
     beforeEach(() => {
         deliverRepository = new DeliverRepositoryInMemory();
         delivererRepository = new DelivererRepositoryInMemory();
         recipientRepository = new RecipientRepositoryInMemory();
+        accountRepository = new AccountRepositoryInMemory();
 
         sut = new CreateDeliverUseCase({
             repositories: {
                 deliverRepository: deliverRepository,
                 delivererRepository: delivererRepository,
                 recipientRepository: recipientRepository,
+                accountRepository: accountRepository
             },
         });
     });
@@ -32,10 +39,15 @@ describe("create Deliver use case ", () => {
     it("should create a delivery ", async () => {
         const deliverer = makeDelivery();
         const recipient = makeRecipient();
+        const account = makeAccount({
+            permissions: PermissionPresets.admin
+        })
         await delivererRepository.create(deliverer);
         await recipientRepository.create(recipient);
+        await accountRepository.create(account);
 
         const response = await sut.execute({
+            actorId: account.id.toString(),
             address: "new street",
             delivererId: deliverer.id.toString(),
             recipientId: recipient.id.toString(),
@@ -48,9 +60,15 @@ describe("create Deliver use case ", () => {
     it("should create a delivery  and persist ", async () => {
         const deliverer = makeDelivery();
         const recipient = makeRecipient();
+        const account = makeAccount({
+            permissions: PermissionPresets.admin
+        })
         await delivererRepository.create(deliverer);
         await recipientRepository.create(recipient);
+        await accountRepository.create(account);
+
         const response = await sut.execute({
+            actorId: account.id.toString(),
             address: "new street",
             delivererId: deliverer.id.toString(),
             recipientId: recipient.id.toString(),

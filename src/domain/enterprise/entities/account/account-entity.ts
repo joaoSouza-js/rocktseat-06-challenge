@@ -38,6 +38,8 @@ export class Account extends Entity<AccountProps> {
         return this.props.permissions.includes(permission);
     }
 
+
+
     grantPermission(permission: PermissionType): void {
         if (!this.hasPermission(permission)) {
             this.props.permissions.push(permission);
