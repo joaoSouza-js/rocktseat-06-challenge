@@ -8,10 +8,10 @@ import type { DeliverRepository } from "../repositories/deliver-repository.js";
 import type { DelivererRepository } from "../repositories/deliverer-repository.js";
 import { CreateDeliverUseCase } from "./create-deliver.js";
 import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
-import { RecipientRepository } from "../repositories/recipent-repository.js";
+import { RecipientRepository } from "../repositories/recipient-repository.js";
 import { AccountRepository } from "../repositories/account-repository.js";
 import { makeAccount } from "@/test/factory/make-account.js";
-import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permisions-preset.js";
+import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permission-preset.js";
 
 describe("create Deliver use case ", () => {
     let deliverRepository: DeliverRepository;

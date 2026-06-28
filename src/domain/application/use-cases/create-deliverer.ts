@@ -1,5 +1,5 @@
 import type { Account } from "@/domain/enterprise/entities/account/account-entity.js";
-import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permisions-preset.js";
+import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permission-preset.js";
 import { Deliverer } from "@/domain/enterprise/entities/deliverer/deliverer-entity.js";
 import { AvailabilityValueObject } from "@/domain/enterprise/entities/deliverer/value-objects/availability.js";
 import { ScheduleValueObject } from "@/domain/enterprise/entities/deliverer/value-objects/schedule.js";

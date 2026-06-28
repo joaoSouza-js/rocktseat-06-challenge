@@ -1,5 +1,5 @@
 import { Account, type CreateAccountInput } from "../account-entity.js";
-import { PermissionPresets } from "../presets/permisions-preset.js";
+import { PermissionPresets } from "../presets/permission-preset.js";
 
 export const AccountFactory = {
     createAdmin(input: CreateAccountInput): Account {

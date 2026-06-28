@@ -1,5 +1,5 @@
 import type { UniqueEntityId } from "@/core/unique-entity-id.js";
-import type { RecipientRepository } from "@/domain/application/repositories/recipent-repository.js";
+import type { RecipientRepository } from "@/domain/application/repositories/recipient-repository.js";
 import type { Recipient } from "@/domain/enterprise/entities/recipient.js";
 
 export class RecipientRepositoryInMemory implements RecipientRepository {

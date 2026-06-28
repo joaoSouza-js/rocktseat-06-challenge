@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permisions-preset.js";
+import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permission-preset.js";
 import { ResourceAlreadyExist } from "@/domain/error/resource-already-exist.js";
 import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
 import { FakeHasher } from "@/test/services/fake-hasher.js";

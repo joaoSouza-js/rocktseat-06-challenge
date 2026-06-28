@@ -1,4 +1,4 @@
-import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permisions-preset.js";
+import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permission-preset.js";
 import { makeAccount } from "@/test/factory/make-account.js";
 import { describe, expect, it } from "vitest";
 import { createDeliverPolicy } from "./create-deliver-policy.js";

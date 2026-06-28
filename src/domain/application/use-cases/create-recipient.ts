@@ -1,6 +1,6 @@
 import { Recipient } from "@/domain/enterprise/entities/recipient.js";
 import { PhoneValueObject } from "@/domain/enterprise/entities/value-objects/phone.js";
-import type { RecipientRepository } from "../repositories/recipent-repository.js";
+import type { RecipientRepository } from "../repositories/recipient-repository.js";
 
 interface Repositories {
     recipientRepository: RecipientRepository;
