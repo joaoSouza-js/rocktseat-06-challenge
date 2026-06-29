@@ -23,12 +23,15 @@ describe("CreateRecipientUseCase", () => {
 
     it("should create and persist a recipient", async () => {
         const account = makeAccount()
+        const recipientAccount = makeAccount()
 
         await accountRepository.create(account);
+        await accountRepository.create(recipientAccount);
 
 
         const { recipient } = await sut.execute({
             actorId: account.id.toString(),
+            recipientAccountId: recipientAccount.id.toString(),
             address: "Rua das Flores, 123",
             name: "João Silva",
             phone: "+5511987654321",

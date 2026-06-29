@@ -19,6 +19,7 @@ interface AccountUseCaseDeps {
 export interface CreateRecipientUseCaseInput {
     actorId: string
     address: string;
+    recipientAccountId: string;
     name: string;
     phone: string;
 }
@@ -46,8 +47,13 @@ export class CreateRecipientUseCase {
         ensureExists(actorAccount, "Account");
         AdministratorCreationPolicy.assertCanCreate(actorAccount);
 
+        const accountId = UniqueEntityId.rehydrate(input.recipientAccountId);
+        const account = await this.accountRepository.findById(accountId);
+        ensureExists(account, "Account");
+
         const phone = PhoneValueObject.create(input.phone);
         const recipient = Recipient.create({
+            accountId: accountId,
             address: input.address,
             name: input.name,
             phone: phone,
