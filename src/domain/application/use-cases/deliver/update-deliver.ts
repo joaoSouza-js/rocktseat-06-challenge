@@ -6,7 +6,6 @@ import type { DelivererRepository } from "../../repositories/deliverer-repositor
 import type { RecipientRepository } from "../../repositories/recipient-repository.js";
 import { AccountRepository } from "../../repositories/account-repository.js";
 import { AdministratorCreationPolicy } from "../../policies/admin/administrator-creation-policy.js";
-import { LocationValueObject } from "@/domain/enterprise/entities/value-objects/location.js";
 
 interface Repositories {
     deliverRepository: DeliverRepository;
@@ -23,8 +22,6 @@ export interface CreateDeliverUseCaseInput {
     delivererId: string;
     recipientId: string;
     address: string;
-    latitude: number;
-    longitude: number;
     actorId: string
 }
 export interface CreateDeliverUseCaseResponse {
@@ -66,14 +63,8 @@ export class CreateDeliverUseCase {
 
         AdministratorCreationPolicy.assertCanCreate(account)
 
-        const location = LocationValueObject.create({
-            address: input.address,
-            latitude: input.latitude,
-            longitude: input.longitude
-        })
-
         const deliver = Deliver.create({
-            location: location,
+            address: input.address,
             delivererId: delivererId,
             recipientId: recipientId,
         });

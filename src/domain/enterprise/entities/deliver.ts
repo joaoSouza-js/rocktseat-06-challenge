@@ -1,5 +1,6 @@
 import { Entity } from "@/core/entity.js";
 import type { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { LocationValueObject } from "./value-objects/location.js";
 
 export enum DeliverStatus {
     PENDING = "PENDING",      // not ready yet (business rules not satisfied)
@@ -13,14 +14,15 @@ export interface DeliverProps {
     delivererId: UniqueEntityId,
     recipientId: UniqueEntityId,
     status: DeliverStatus,
-    address: string,
+    location: LocationValueObject,
     updatedAt: Date
 }
 
 interface CreateDeliverProps {
     delivererId: UniqueEntityId,
     recipientId: UniqueEntityId,
-    address: string,
+    location: LocationValueObject,
+
 }
 
 export class Deliver extends Entity<DeliverProps> {
@@ -50,8 +52,8 @@ export class Deliver extends Entity<DeliverProps> {
         return this.props.recipientId
     }
 
-    get address(): string {
-        return this.props.address
+    get location(): LocationValueObject {
+        return this.props.location
     }
 
     get status(): DeliverStatus {

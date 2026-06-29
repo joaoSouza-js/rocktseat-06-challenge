@@ -47,6 +47,8 @@ describe("create Deliver use case ", () => {
         await accountRepository.create(account);
 
         const response = await sut.execute({
+            latitude: -23.55,
+            longitude: -46.55,
             actorId: account.id.toString(),
             address: "new street",
             delivererId: deliverer.id.toString(),
@@ -68,6 +70,8 @@ describe("create Deliver use case ", () => {
         await accountRepository.create(account);
 
         const response = await sut.execute({
+            latitude: -23.55,
+            longitude: -46.55,
             actorId: account.id.toString(),
             address: "new street",
             delivererId: deliverer.id.toString(),
