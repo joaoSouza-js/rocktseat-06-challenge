@@ -1,19 +1,21 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { RecipientRepositoryInMemory } from "@/test/repositories/recipient-repository-in-memory.js";
-import { CreateRecipientUseCase } from "./create-recipient.js";
 import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
 import { AccountRepository } from "../../repositories/account-repository.js";
 import { RecipientRepository } from "../../repositories/recipient-repository.js";
 import { makeAccount } from "@/test/factory/make-account.js";
+import { DeleteRecipientUseCase } from "./delete-recipient.js";
+import { makeRecipient } from "@/test/factory/make-recipient.js";
+import { PermissionType } from "@/domain/enterprise/entities/account/enums/permissions-type.js";
 
-describe("CreateRecipientUseCase", () => {
+describe("DeleteRecipientUseCase", () => {
     let recipientRepository: RecipientRepository
-    let sut: CreateRecipientUseCase;
+    let sut: DeleteRecipientUseCase;
     let accountRepository: AccountRepository
     beforeEach(() => {
         recipientRepository = new RecipientRepositoryInMemory();
         accountRepository = new AccountRepositoryInMemory();
-        sut = new CreateRecipientUseCase({
+        sut = new DeleteRecipientUseCase({
             repositories: {
                 recipientRepository,
                 accountRepository
@@ -21,23 +23,25 @@ describe("CreateRecipientUseCase", () => {
         });
     });
 
-    it("should create and persist a recipient", async () => {
-        const account = makeAccount()
-
+    it("should delete a recipient on database", async () => {
+        const account = makeAccount(
+            {
+                permissions: [PermissionType.RECIPIENT_DELETE]
+            }
+        )
+        const recipient = makeRecipient()
         await accountRepository.create(account);
+        await recipientRepository.create(recipient);
 
-
-        const { recipient } = await sut.execute({
+        await sut.execute({
             actorId: account.id.toString(),
-            address: "Rua das Flores, 123",
-            name: "João Silva",
-            phone: "+5511987654321",
+            recipientId: recipient.id.toString(),
         });
 
-        const persistedRecipient = await recipientRepository.findById(
+        const recipientOnDatabase = await recipientRepository.findById(
             recipient.id
         );
 
-        expect(persistedRecipient).toEqual(recipient);
+        expect(recipientOnDatabase).toBeNull();
     });
 });
