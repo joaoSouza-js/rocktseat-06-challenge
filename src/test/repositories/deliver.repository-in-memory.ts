@@ -3,6 +3,10 @@ import type { DeliverRepository } from "@/domain/application/repositories/delive
 import { type Deliver } from "@/domain/enterprise/entities/deliver.js";
 
 export class DeliverRepositoryInMemory implements DeliverRepository {
+    async fetchByDelivererId(delivererId: UniqueEntityId): Promise<Deliver[]> {
+        const delivers = this.delivers.filter((deliver) => deliver.deliveryId.equals(delivererId));
+        return delivers
+    }
     async fetchByRecipientId(recipientId: UniqueEntityId): Promise<Deliver[]> {
         const delivers = this.delivers.filter((deliver) => deliver.recipientId.equals(recipientId));
         return delivers

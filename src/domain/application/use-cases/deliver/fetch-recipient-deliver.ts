@@ -10,28 +10,28 @@ interface Repositories {
 
 }
 
-interface FetchRecipientDeliverDeliverUseCaseDeps {
+interface FetchRecipientDeliverUseCaseDeps {
     repositories: Repositories;
 }
 
-export interface FetchRecipientDeliverDeliverUseCaseInput {
+export interface FetchRecipientDeliverUseCaseInput {
     actorId: string
     recipientId: string
 }
 
 
-export class FetchRecipientDeliverDeliverUseCase {
+export class FetchRecipientDeliverUseCase {
     private deliverRepository: DeliverRepository;
     private accountRepository: AccountRepository;
 
-    constructor(deps: FetchRecipientDeliverDeliverUseCaseDeps) {
+    constructor(deps: FetchRecipientDeliverUseCaseDeps) {
         this.deliverRepository = deps.repositories.deliverRepository;
         this.accountRepository = deps.repositories.accountRepository;
 
     }
 
     async execute(
-        input: FetchRecipientDeliverDeliverUseCaseInput,
+        input: FetchRecipientDeliverUseCaseInput,
     ) {
 
         const actorId = UniqueEntityId.rehydrate(input.actorId);

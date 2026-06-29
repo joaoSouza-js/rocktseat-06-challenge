@@ -6,46 +6,57 @@ import { makeAccount } from "@/test/factory/make-account.js";
 import { PermissionType } from "@/domain/enterprise/entities/account/enums/permissions-type.js";
 import { makeDeliver } from "@/test/factory/make-deliver.js";
 import { DeliverRepositoryInMemory } from "@/test/repositories/deliver.repository-in-memory.js";
-import { FetchRecipientDeliverUseCase } from "./fetch-recipient-deliver.js";
 import { makeRecipient } from "@/test/factory/make-recipient.js";
+import { FetchDelivererDeliverUseCase } from "./fetch-deliverer-deliver.js";
+import { DelivererRepository } from "../../repositories/deliverer-repository.js";
+import { DelivererRepositoryInMemory } from "@/test/repositories/deliverer-repository-in-memory.js";
+import { makeDeliverer } from "@/test/factory/make-deliverer.js";
 
-describe("FetchRecipientDeliverUseCase", () => {
+describe("FetchDelivererDeliverUseCase", () => {
     let deliverRepository: DeliverRepository
-    let sut: FetchRecipientDeliverUseCase;
+    let sut: FetchDelivererDeliverUseCase;
     let accountRepository: AccountRepository
+    let delivererRepository: DelivererRepository
     beforeEach(() => {
         deliverRepository = new DeliverRepositoryInMemory();
         accountRepository = new AccountRepositoryInMemory();
-        sut = new FetchRecipientDeliverUseCase({
+        delivererRepository = new DelivererRepositoryInMemory();
+        sut = new FetchDelivererDeliverUseCase({
             repositories: {
                 deliverRepository,
-                accountRepository
+                accountRepository,
+                delivererRepository
             },
         });
     });
 
-    it("should fetch recipient delivers", async () => {
+    it("should fetch deliverer delivers", async () => {
         const account = makeAccount(
             {
                 permissions: [PermissionType.DELIVERER_VIEW]
             }
         )
+        const deliverer = makeDeliverer({
+            accountId: account.id
+        })
         const recipient = makeRecipient()
 
         const deliverPromises = Array.from({ length: 8 }, () => {
             const deliver = makeDeliver({
-                recipientId: recipient.id
+                recipientId: recipient.id,
+                delivererId: deliverer.id
             })
             return deliverRepository.create(deliver);
         })
 
 
+        await delivererRepository.create(deliverer);
         await accountRepository.create(account);
         await Promise.all(deliverPromises)
 
         const response = await sut.execute({
-            actorId: account.id.toString(),
-            recipientId: recipient.id.toString(),
+            actorId: deliverer.id.toString(),
+
         });
 
         expect(response.delivers.length).toEqual(8)
