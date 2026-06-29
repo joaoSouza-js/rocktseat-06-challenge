@@ -3,6 +3,11 @@ import type { DeliverRepository } from "@/domain/application/repositories/delive
 import { type Deliver } from "@/domain/enterprise/entities/deliver.js";
 
 export class DeliverRepositoryInMemory implements DeliverRepository {
+    async delete(id: UniqueEntityId): Promise<void> {
+        const deliverIndex = this.delivers.findIndex((deliver) => deliver.id.equals(id));
+        this.delivers.splice(deliverIndex, 1);
+
+    }
     async update(updateDeliver: Deliver): Promise<void> {
         const deliverIndex = this.delivers.findIndex((deliver) => deliver.id.equals(updateDeliver.id));
         this.delivers[deliverIndex] = updateDeliver

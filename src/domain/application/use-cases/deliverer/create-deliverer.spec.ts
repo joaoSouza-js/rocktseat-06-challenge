@@ -2,9 +2,9 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
 import { DelivererRepositoryInMemory } from "@/test/repositories/deliverer-repository-in-memory.js";
 import { FakeHasher } from "@/test/services/fake-hasher.js";
-import type { AccountRepository } from "../repositories/account-repository.js";
-import type { DelivererRepository } from "../repositories/deliverer-repository.js";
-import type { HasherGenerator } from "../services/hasher-generator.js";
+import type { AccountRepository } from "../../repositories/account-repository.js";
+import type { DelivererRepository } from "../../repositories/deliverer-repository.js";
+import type { HasherGenerator } from "../../services/hasher-generator.js";
 import { CreateDelivererUseCase, CreateDelivererUseCaseInput } from "./create-deliverer.js";
 import { makeAccount } from "@/test/factory/make-account.js";
 
