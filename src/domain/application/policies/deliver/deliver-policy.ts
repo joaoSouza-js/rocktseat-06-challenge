@@ -25,9 +25,9 @@ export class DeliverPolicy {
     }
 
     static assertCanView(account: Account) {
-        const hasPermission = account.hasPermission(PermissionType.VIEW);
+        const hasPermission = account.hasPermission(PermissionType.DELIVERER_VIEW);
         if (hasPermission === false) {
-            throw new MissingPermissionError(PermissionType.VIEW)
+            throw new MissingPermissionError(PermissionType.DELIVERER_VIEW)
         }
     }
 }

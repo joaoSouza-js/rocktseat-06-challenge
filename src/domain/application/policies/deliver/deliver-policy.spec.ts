@@ -74,7 +74,7 @@ describe("DeliverPolicy", () => {
     describe("assertCanView", () => {
         it("should allow when permission exists", () => {
             const account = makeAccount({
-                permissions: [PermissionType.VIEW],
+                permissions: [PermissionType.DELIVERER_VIEW],
             });
 
             expect(() =>

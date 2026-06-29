@@ -6,5 +6,6 @@ export interface DeliverRepository {
     findById(id: UniqueEntityId): Promise<Deliver | null>;
     delete(id: UniqueEntityId): Promise<void>;
     update(deliver: Deliver): Promise<void>;
+    fetchByRecipientId(recipientId: UniqueEntityId): Promise<Deliver[]>
 
 }
