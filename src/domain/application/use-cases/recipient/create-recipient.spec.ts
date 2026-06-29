@@ -2,8 +2,8 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { RecipientRepositoryInMemory } from "@/test/repositories/recipient-repository-in-memory.js";
 import { CreateRecipientUseCase } from "./create-recipient.js";
 import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
-import { AccountRepository } from "../repositories/account-repository.js";
-import { RecipientRepository } from "../repositories/recipient-repository.js";
+import { AccountRepository } from "../../repositories/account-repository.js";
+import { RecipientRepository } from "../../repositories/recipient-repository.js";
 import { makeAccount } from "@/test/factory/make-account.js";
 
 

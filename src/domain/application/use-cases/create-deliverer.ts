@@ -9,7 +9,7 @@ import { AccountCreatorService } from "../services/account-creator.js";
 import type { HasherGenerator } from "../services/hasher-generator.js";
 import { UniqueEntityId } from "@/core/unique-entity-id.js";
 import { ensureExists } from "@/core/guards/ensure-exist.js";
-import { AdministratorCreationPolicy } from "../policies/administrator-creation-policy.js";
+import { AdministratorCreationPolicy } from "../policies/admin/administrator-creation-policy.js";
 
 interface Repositories {
     accountRepository: AccountRepository;

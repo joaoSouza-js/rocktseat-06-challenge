@@ -1,9 +1,9 @@
 import { Recipient } from "@/domain/enterprise/entities/recipient.js";
 import { PhoneValueObject } from "@/domain/enterprise/entities/value-objects/phone.js";
-import type { RecipientRepository } from "../repositories/recipient-repository.js";
-import { AccountRepository } from "../repositories/account-repository.js";
+import type { RecipientRepository } from "../../repositories/recipient-repository.js";
+import { AccountRepository } from "../../repositories/account-repository.js";
 import { UniqueEntityId } from "@/core/unique-entity-id.js";
-import { AdministratorCreationPolicy } from "../policies/administrator-creation-policy.js";
+import { AdministratorCreationPolicy } from "../../policies/admin/administrator-creation-policy.js";
 import { ensureExists } from "@/core/guards/ensure-exist.js";
 
 interface Repositories {

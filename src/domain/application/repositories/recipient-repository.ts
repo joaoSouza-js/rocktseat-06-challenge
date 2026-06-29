@@ -5,4 +5,6 @@ export interface RecipientRepository {
     create(recipient: Recipient): Promise<void>;
     findById(id: UniqueEntityId): Promise<Recipient | null
     >;
+    delete(id: UniqueEntityId): Promise<void>;
+    update(recipient: Recipient): Promise<void>;
 }

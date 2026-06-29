@@ -4,7 +4,7 @@ import { Deliver, DeliverStatus } from "@/domain/enterprise/entities/deliver.js"
 import type { DeliverRepository } from "../../repositories/deliver-repository.js";
 import type { DelivererRepository } from "../../repositories/deliverer-repository.js";
 import { AccountRepository } from "../../repositories/account-repository.js";
-import { DeliverUpdatePolicy } from "../../policies/deliver-update-policy.js";
+import { DeliverUpdatePolicy } from "../../policies/deliver/deliver-update-policy.js";
 import { DelivererAccountService } from "../../services/deliverer-account.js";
 
 interface Repositories {

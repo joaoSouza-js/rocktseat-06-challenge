@@ -1,10 +1,12 @@
 import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permission-preset.js";
 import { makeAccount } from "@/test/factory/make-account.js";
 import { describe, expect, it } from "vitest";
-import { CredentialsInvalid } from "@/domain/error/credentials-invalid.js";
 import { DeliverUpdatePolicy } from "./deliver-update-policy.js";
 import { makeDelivery } from "@/test/factory/make-delivery.js";
 import { makeDeliver } from "@/test/factory/make-deliver.js";
+import { MissingPermissionError } from "@/domain/error/missing-permission-error.js";
+import { NotAllowedError } from "@/domain/error/not-allowed-error.js";
+import { PermissionType } from "@/domain/enterprise/entities/account/enums/permissions-type.js";
 
 describe("deliver update policy", () => {
     it("should allow to update if deliverer is assigned to deliver", () => {
@@ -27,7 +29,7 @@ describe("deliver update policy", () => {
         }).not.toThrow();
     });
 
-    it("should throw a CredentialsInvalid if deliverer is not deliverer", () => {
+    it("should throw a MissingPermissionError if deliverer is not deliverer", () => {
         const account = makeAccount({
             permissions: PermissionPresets.user
         })
@@ -42,12 +44,12 @@ describe("deliver update policy", () => {
             account,
             delivererId: deliverer.id,
             deliver
-        })).toThrow(CredentialsInvalid);
+        })).toThrow(MissingPermissionError);
     });
 
-    it("should throw a CredentialsInvalid if deliverer is not assigned to deliver", () => {
+    it("should throw a NotAllowedError if deliverer is not assigned to deliver", () => {
         const account = makeAccount({
-            permissions: PermissionPresets.deliver
+            permissions: [PermissionType.DELIVER_UPDATE]
         })
         const deliverer = makeDelivery({
             accountId: account.id
@@ -58,6 +60,6 @@ describe("deliver update policy", () => {
             account,
             delivererId: deliverer.id,
             deliver
-        })).toThrow(CredentialsInvalid);
+        })).toThrow(NotAllowedError);
     });
 });
