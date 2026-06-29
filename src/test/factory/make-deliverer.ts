@@ -9,7 +9,7 @@ import { ScheduleValueObject } from "@/domain/enterprise/entities/deliverer/valu
 
 interface makeDelivererProps extends Partial<DelivererProps> { }
 
-export function makeDelivery(props?: makeDelivererProps) {
+export function makeDeliverer(props?: makeDelivererProps) {
 
     const accountId = props?.accountId ?? UniqueEntityId.rehydrate(randomUUID());
     const schedule = props?.schedule ?? ScheduleValueObject.businessDays();

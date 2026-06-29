@@ -6,7 +6,7 @@ import { DelivererRepository } from "../../repositories/deliverer-repository.js"
 import { makeAccount } from "@/test/factory/make-account.js";
 import { DeleteDelivererUseCase } from "./delete-deliverer.js";
 import { PermissionType } from "@/domain/enterprise/entities/account/enums/permissions-type.js";
-import { makeDelivery } from "@/test/factory/make-delivery.js";
+import { makeDeliverer } from "@/test/factory/make-deliverer.js";
 
 describe("DeleteDelivererUseCase", () => {
     let delivererRepository: DelivererRepository
@@ -29,7 +29,7 @@ describe("DeleteDelivererUseCase", () => {
                 permissions: [PermissionType.DELIVERER_DELETE]
             }
         )
-        const deliverer = makeDelivery()
+        const deliverer = makeDeliverer()
         await accountRepository.create(account);
         await delivererRepository.create(deliverer);
 

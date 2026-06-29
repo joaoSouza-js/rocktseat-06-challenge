@@ -1,6 +1,6 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
-import { makeDelivery } from "@/test/factory/make-delivery.js";
+import { makeDeliverer } from "@/test/factory/make-deliverer.js";
 import { DeliverRepositoryInMemory } from "@/test/repositories/deliver.repository-in-memory.js";
 import { DelivererRepositoryInMemory } from "@/test/repositories/deliverer-repository-in-memory.js";
 import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
@@ -37,7 +37,7 @@ describe("mark deliver ready use case ", () => {
         const account = makeAccount({
             permissions: PermissionPresets.deliver
         })
-        const deliverer = makeDelivery({
+        const deliverer = makeDeliverer({
             accountId: account.id
         });
         const deliver = makeDeliver({
@@ -62,7 +62,7 @@ describe("mark deliver ready use case ", () => {
         const account = makeAccount({
             permissions: PermissionPresets.deliver
         })
-        const deliverer = makeDelivery({
+        const deliverer = makeDeliverer({
             accountId: account.id
         });
         const deliver = makeDeliver({

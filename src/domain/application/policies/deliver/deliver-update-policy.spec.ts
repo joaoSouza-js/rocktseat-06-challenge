@@ -2,7 +2,7 @@ import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/
 import { makeAccount } from "@/test/factory/make-account.js";
 import { describe, expect, it } from "vitest";
 import { DeliverUpdatePolicy } from "./deliver-update-policy.js";
-import { makeDelivery } from "@/test/factory/make-delivery.js";
+import { makeDeliverer } from "@/test/factory/make-deliverer.js";
 import { makeDeliver } from "@/test/factory/make-deliver.js";
 import { MissingPermissionError } from "@/domain/error/missing-permission-error.js";
 import { NotAllowedError } from "@/domain/error/not-allowed-error.js";
@@ -13,7 +13,7 @@ describe("deliver update policy", () => {
         const account = makeAccount({
             permissions: PermissionPresets.deliver
         })
-        const deliverer = makeDelivery({
+        const deliverer = makeDeliverer({
             accountId: account.id
         });
         const deliver = makeDeliver({
@@ -33,7 +33,7 @@ describe("deliver update policy", () => {
         const account = makeAccount({
             permissions: PermissionPresets.user
         })
-        const deliverer = makeDelivery({
+        const deliverer = makeDeliverer({
             accountId: account.id
         });
         const deliver = makeDeliver({
@@ -51,7 +51,7 @@ describe("deliver update policy", () => {
         const account = makeAccount({
             permissions: [PermissionType.DELIVER_UPDATE]
         })
-        const deliverer = makeDelivery({
+        const deliverer = makeDeliverer({
             accountId: account.id
         });
         const deliver = makeDeliver({});
