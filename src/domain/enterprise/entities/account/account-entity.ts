@@ -52,6 +52,10 @@ export class Account extends Entity<AccountProps> {
         );
     }
 
+    set passwordHashed(passwordHashed: string) {
+        this.props.passwordHash = passwordHashed;
+    }
+
     get permissions(): PermissionType[] {
         return [...this.props.permissions];
     }

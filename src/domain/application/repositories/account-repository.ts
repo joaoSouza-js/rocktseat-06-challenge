@@ -6,4 +6,5 @@ export interface AccountRepository {
     create(account: Account): Promise<void>;
     findById(id: UniqueEntityId): Promise<Account | null>;
     findByCpf(cpf: CPFValueObject): Promise<Account | null>;
+    update(account: Account): Promise<void>;
 }

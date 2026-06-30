@@ -4,6 +4,13 @@ import type { Account } from "@/domain/enterprise/entities/account/account-entit
 import type { CPFValueObject } from "@/domain/enterprise/entities/account/value-objects/cpf/cpf-value-object.js";
 
 export class AccountRepositoryInMemory implements AccountRepository {
+    async update(account: Account): Promise<void> {
+        const accountIndex = this.accounts.findIndex((account) => {
+            return account.id.equals(account.id);
+        });
+        this.accounts[accountIndex] = account;
+
+    }
     findByCpf(cpf: CPFValueObject): Promise<Account | null> {
         const accountFounded =
             this.accounts.find((account) => {

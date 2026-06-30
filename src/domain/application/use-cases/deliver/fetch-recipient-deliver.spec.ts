@@ -3,11 +3,11 @@ import { AccountRepositoryInMemory } from "@/test/repositories/account-repositor
 import { AccountRepository } from "../../repositories/account-repository.js";
 import { DeliverRepository } from "../../repositories/deliver-repository.js";
 import { makeAccount } from "@/test/factory/make-account.js";
-import { PermissionType } from "@/domain/enterprise/entities/account/enums/permissions-type.js";
 import { makeDeliver } from "@/test/factory/make-deliver.js";
 import { DeliverRepositoryInMemory } from "@/test/repositories/deliver.repository-in-memory.js";
 import { FetchRecipientDeliverUseCase } from "./fetch-recipient-deliver.js";
 import { makeRecipient } from "@/test/factory/make-recipient.js";
+import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permission-preset.js";
 
 describe("FetchRecipientDeliverUseCase", () => {
     let deliverRepository: DeliverRepository
@@ -27,7 +27,7 @@ describe("FetchRecipientDeliverUseCase", () => {
     it("should fetch recipient delivers", async () => {
         const account = makeAccount(
             {
-                permissions: [PermissionType.DELIVERER_VIEW]
+                permissions: PermissionPresets.deliver
             }
         )
         const recipient = makeRecipient()

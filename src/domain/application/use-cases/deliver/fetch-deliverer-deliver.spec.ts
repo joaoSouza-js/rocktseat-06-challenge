@@ -3,7 +3,6 @@ import { AccountRepositoryInMemory } from "@/test/repositories/account-repositor
 import { AccountRepository } from "../../repositories/account-repository.js";
 import { DeliverRepository } from "../../repositories/deliver-repository.js";
 import { makeAccount } from "@/test/factory/make-account.js";
-import { PermissionType } from "@/domain/enterprise/entities/account/enums/permissions-type.js";
 import { makeDeliver } from "@/test/factory/make-deliver.js";
 import { DeliverRepositoryInMemory } from "@/test/repositories/deliver.repository-in-memory.js";
 import { makeRecipient } from "@/test/factory/make-recipient.js";
@@ -11,6 +10,7 @@ import { FetchDelivererDeliverUseCase } from "./fetch-deliverer-deliver.js";
 import { DelivererRepository } from "../../repositories/deliverer-repository.js";
 import { DelivererRepositoryInMemory } from "@/test/repositories/deliverer-repository-in-memory.js";
 import { makeDeliverer } from "@/test/factory/make-deliverer.js";
+import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/permission-preset.js";
 
 describe("FetchDelivererDeliverUseCase", () => {
     let deliverRepository: DeliverRepository
@@ -33,7 +33,7 @@ describe("FetchDelivererDeliverUseCase", () => {
     it("should fetch deliverer delivers", async () => {
         const account = makeAccount(
             {
-                permissions: [PermissionType.DELIVERER_VIEW]
+                permissions: PermissionPresets.deliver
             }
         )
         const deliverer = makeDeliverer({

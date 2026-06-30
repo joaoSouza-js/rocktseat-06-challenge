@@ -15,6 +15,7 @@ export const PermissionPresets = {
     deliver: [
         PermissionType.DELIVER_UPDATE,
         PermissionType.DELIVER_CREATE,
+        PermissionType.DELIVER_VIEW
     ],
 
     user: [
