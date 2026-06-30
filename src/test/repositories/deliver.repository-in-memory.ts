@@ -1,8 +1,13 @@
 import type { UniqueEntityId } from "@/core/unique-entity-id.js";
 import type { DeliverRepository } from "@/domain/application/repositories/deliver-repository.js";
 import { type Deliver } from "@/domain/enterprise/entities/deliver.js";
+import { LocationValueObject } from "@/domain/enterprise/entities/value-objects/location.js";
 
 export class DeliverRepositoryInMemory implements DeliverRepository {
+    async fetchNearestDeliver(location: LocationValueObject, delivererId?: UniqueEntityId): Promise<Deliver[]> {
+        return this.delivers
+    }
+
     async fetchByDelivererId(delivererId: UniqueEntityId): Promise<Deliver[]> {
         const delivers = this.delivers.filter((deliver) => deliver.deliveryId.equals(delivererId));
         return delivers

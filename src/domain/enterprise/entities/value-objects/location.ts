@@ -1,7 +1,7 @@
 import { ValidationError } from "@/domain/error/validation-error.js";
 
 interface AddressProps {
-    address: string;
+    address?: string;
     latitude: number;
     longitude: number;
 }
@@ -12,9 +12,9 @@ export class LocationValueObject {
     ) { }
 
     static create(input: AddressProps): LocationValueObject {
-        const address = input.address.trim();
+        const address = input.address?.trim();
 
-        if (!address || address.length < 5) {
+        if (!!address && address.length < 5) {
             throw new ValidationError("Invalid address");
         }
 
@@ -41,7 +41,7 @@ export class LocationValueObject {
         });
     }
 
-    get address(): string {
+    get address(): string | undefined {
         return this.props.address;
     }
 
