@@ -4,11 +4,11 @@ import { ResourceAlreadyExist } from "@/domain/error/resource-already-exist.js";
 import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
 import { FakeHasher } from "@/test/services/fake-hasher.js";
 import type { AccountRepository } from "../repositories/account-repository.js";
-import type { HasherGenerator } from "../services/hasher-generator.js";
 import {
     AccountCreatorService,
     type AccountCreatorServiceRequest,
 } from "./account-creator.js";
+import type { HasherGenerator } from "./hasher-generator.js";
 
 describe("create account service ", () => {
     let accountRepository: AccountRepository;
