@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum DeliveryStatus {
+  PENDING
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED
+}
+
+enum ScheduleDay {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+model Account {
+  id           String @id @default(uuid())
+  name         String
+  cpf          String @unique
+  phone        String @unique
+  passwordHash String
+
+  deliverer Deliverer?
+  recipient Recipient?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Deliverer {
+  id String @id @default(uuid())
+
+  accountId String  @unique
+  account   Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  schedules  DelivererSchedule[]
+  deliveries Deliver[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DelivererSchedule {
+  id String @id @default(uuid())
+
+  delivererId String
+  day         ScheduleDay
+
+  shiftStart Int
+  shiftEnd   Int
+
+  deliverer Deliverer @relation(fields: [delivererId], references: [id], onDelete: Cascade)
+
+  @@index([delivererId, day])
+}
+
+model Recipient {
+  id String @id @default(uuid())
+
+  accountId String  @unique
+  account   Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  deliveries Deliver[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Deliver {
+  id String @id @default(uuid())
+
+  delivererId String
+  recipientId String
+
+  latitude  Float
+  longitude Float
+
+  status  DeliveryStatus @default(PENDING)
+  address String
+
+  deliverer Deliverer @relation(fields: [delivererId], references: [id], onDelete: Restrict)
+  recipient Recipient @relation(fields: [recipientId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([delivererId, status])
+  @@index([recipientId])
+  @@index([status])
+}
