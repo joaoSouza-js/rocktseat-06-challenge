@@ -1,5 +1,5 @@
-import { ensureExists } from "@/core/guards/ensure-exist.js";
-import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { ensureExists } from "@/domain/core/guards/ensure-exist.js";
+import { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import { Deliver } from "@/domain/enterprise/entities/deliver.js";
 import { LocationValueObject } from "@/domain/enterprise/entities/value-objects/location.js";
 import { AdministratorCreationPolicy } from "../../policies/admin/administrator-creation-policy.js";

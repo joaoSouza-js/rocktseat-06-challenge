@@ -1,4 +1,4 @@
-import type { UniqueEntityId } from "@/core/unique-entity-id.js";
+import type { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import type { Recipient } from "@/domain/enterprise/entities/recipient.js";
 
 export interface RecipientRepository {

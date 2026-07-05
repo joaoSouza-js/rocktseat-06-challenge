@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import {
     Deliverer,
     type DelivererProps,

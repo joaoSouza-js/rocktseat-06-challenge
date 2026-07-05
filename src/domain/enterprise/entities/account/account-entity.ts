@@ -1,4 +1,4 @@
-import { Entity } from "@/core/entity.js";
+import { Entity } from "@/domain/core/entity.js";
 import type { PermissionType } from "@/domain/enterprise/entities/account/enums/permissions-type.js";
 import type { PhoneValueObject } from "../value-objects/phone.js";
 import type { CPFValueObject } from "./value-objects/cpf/cpf-value-object.js";

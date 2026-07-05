@@ -1,4 +1,4 @@
-import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import { Account } from "@/domain/enterprise/entities/account/account-entity.js";
 import { PermissionType } from "@/domain/enterprise/entities/account/enums/permissions-type.js";
 import { Deliver } from "@/domain/enterprise/entities/deliver.js";

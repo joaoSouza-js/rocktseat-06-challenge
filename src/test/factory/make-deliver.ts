@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import { Deliver, DeliverProps } from "@/domain/enterprise/entities/deliver.js";
 import { faker } from "@faker-js/faker";
 import { LocationValueObject } from "@/domain/enterprise/entities/value-objects/location.js";

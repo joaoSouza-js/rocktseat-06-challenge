@@ -1,5 +1,5 @@
-import { ensureExists } from "@/core/guards/ensure-exist.js";
-import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { ensureExists } from "@/domain/core/guards/ensure-exist.js";
+import { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import { Account } from "@/domain/enterprise/entities/account/account-entity.js";
 import { AccountRepository } from "../repositories/account-repository.js";
 import { DelivererRepository } from "../repositories/deliverer-repository.js";

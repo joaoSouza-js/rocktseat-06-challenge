@@ -5,7 +5,7 @@ import {
 } from "@/domain/enterprise/entities/recipient.js";
 import { PhoneValueObject } from "@/domain/enterprise/entities/value-objects/phone.js";
 import { fakeBRPhone } from "./fake-phone.js";
-import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import { randomUUID } from "node:crypto";
 
 interface makeRecipientProps extends Partial<RecipientProps> { }

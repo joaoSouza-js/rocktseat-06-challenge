@@ -7,8 +7,8 @@ import type { AccountRepository } from "../../repositories/account-repository.js
 import type { DelivererRepository } from "../../repositories/deliverer-repository.js";
 import { AccountCreatorService } from "../../services/account-creator.js";
 import type { HasherGenerator } from "../../services/hasher-generator.js";
-import { UniqueEntityId } from "@/core/unique-entity-id.js";
-import { ensureExists } from "@/core/guards/ensure-exist.js";
+import { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
+import { ensureExists } from "@/domain/core/guards/ensure-exist.js";
 import { AdministratorCreationPolicy } from "../../policies/admin/administrator-creation-policy.js";
 
 interface Repositories {

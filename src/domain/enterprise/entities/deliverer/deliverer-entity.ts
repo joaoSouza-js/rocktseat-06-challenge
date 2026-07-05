@@ -1,5 +1,5 @@
-import { Entity } from "@/core/entity.js";
-import type { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { Entity } from "@/domain/core/entity.js";
+import type { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import type { AvailabilityValueObject } from "./value-objects/availability.js";
 import type { ScheduleValueObject } from "./value-objects/schedule.js";
 

@@ -1,7 +1,7 @@
 import type { RecipientRepository } from "../../repositories/recipient-repository.js";
 import { AccountRepository } from "../../repositories/account-repository.js";
-import { UniqueEntityId } from "@/core/unique-entity-id.js";
-import { ensureExists } from "@/core/guards/ensure-exist.js";
+import { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
+import { ensureExists } from "@/domain/core/guards/ensure-exist.js";
 import { RecipientPolicy } from "../../policies/recipient/recipient-policy.js";
 
 interface Repositories {

@@ -1,4 +1,4 @@
-import type { UniqueEntityId } from "@/core/unique-entity-id.js";
+import type { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import type { Deliver } from "@/domain/enterprise/entities/deliver.js";
 import { LocationValueObject } from "@/domain/enterprise/entities/value-objects/location.js";
 

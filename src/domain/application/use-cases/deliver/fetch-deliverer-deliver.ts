@@ -1,6 +1,6 @@
 import type { DeliverRepository } from "../../repositories/deliver-repository.js";
 import { AccountRepository } from "../../repositories/account-repository.js";
-import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import { DeliverPolicy } from "../../policies/deliver/deliver-policy.js";
 import { DelivererAccountService } from "../../services/deliverer-account.js";
 import { DelivererRepository } from "../../repositories/deliverer-repository.js";

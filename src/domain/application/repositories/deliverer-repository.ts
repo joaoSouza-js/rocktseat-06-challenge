@@ -1,4 +1,4 @@
-import type { UniqueEntityId } from "@/core/unique-entity-id.js";
+import type { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 import type { Deliverer } from "@/domain/enterprise/entities/deliverer/deliverer-entity.js";
 
 export interface DelivererRepository {

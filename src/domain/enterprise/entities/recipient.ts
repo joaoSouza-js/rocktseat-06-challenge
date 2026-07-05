@@ -1,6 +1,6 @@
-import { Entity } from "@/core/entity.js";
+import { Entity } from "@/domain/core/entity.js";
 import type { PhoneValueObject } from "./value-objects/phone.js";
-import { UniqueEntityId } from "@/core/unique-entity-id.js";
+import { UniqueEntityId } from "@/domain/core/unique-entity-id.js";
 
 export interface RecipientProps {
     accountId: UniqueEntityId;
