@@ -1,4 +1,4 @@
-import { removeNonDigits } from "@/shared/remove-non-digits.js";
+import { removeNonDigits } from "@/domain/shared/remove-non-digits";
 
 function calculateVerificationDigit(
     cpf: string,

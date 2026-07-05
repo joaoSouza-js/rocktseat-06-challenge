@@ -1,37 +1,31 @@
 import { ValidationError } from "@/domain/error/validation-error.js";
-import { removeNonDigits } from "@/shared/remove-non-digits.js";
+import { removeNonDigits } from "@/domain/shared/remove-non-digits.js";
 import { isCpfValid } from "./cpf-validator.js";
 
 export class CPFValueObject {
-
-
-    private constructor(private readonly value: string) {
-    }
+    private constructor(private readonly value: string) { }
 
     static create(cpf: string): CPFValueObject {
+        const cpfIsValid = isCpfValid(cpf);
 
-        const cpfIsValid = isCpfValid(cpf)
+        if (cpfIsValid === false)
+            throw new ValidationError("please provide a valid cpf");
 
-        if (cpfIsValid === false) throw new ValidationError("please provide a valid cpf")
+        const cpfFormatted = removeNonDigits(cpf);
 
-        const cpfFormatted = removeNonDigits(cpf)
-
-        return new CPFValueObject(cpfFormatted)
-
+        return new CPFValueObject(cpfFormatted);
     }
 
     static rehydrate(cpf: string): CPFValueObject {
-        const cpfFormatted = removeNonDigits(cpf)
-        return new CPFValueObject(cpfFormatted)
+        const cpfFormatted = removeNonDigits(cpf);
+        return new CPFValueObject(cpfFormatted);
     }
-
 
     equals(other: CPFValueObject): boolean {
         return this.value === other.value;
     }
 
-
     get cpf(): string {
-        return this.value
+        return this.value;
     }
 }
