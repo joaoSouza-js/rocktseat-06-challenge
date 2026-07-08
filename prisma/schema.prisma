@@ -26,11 +26,12 @@ enum ScheduleDay {
 }
 
 model Account {
-  id           String @id @default(uuid())
+  id           String   @id @default(uuid())
   name         String
-  cpf          String @unique
-  phone        String @unique
+  cpf          String   @unique
+  phone        String   @unique
   passwordHash String
+  permissions  String[]
 
   deliverer Deliverer?
   recipient Recipient?
