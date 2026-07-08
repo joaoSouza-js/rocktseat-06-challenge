@@ -13,6 +13,10 @@ export class PhoneValueObject {
         return new PhoneValueObject(normalized);
     }
 
+    static rehydrate(phone: string): PhoneValueObject {
+        return new PhoneValueObject(phone);
+    }
+
     get value(): string {
         return this.phone;
     }
