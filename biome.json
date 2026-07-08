@@ -14,14 +14,21 @@
 	},
 	"linter": {
 		"enabled": true,
+
 		"rules": {
 			"preset": "recommended",
+			"complexity": {
+				"noStaticOnlyClass": "off"
+			},
 			"style": {
 				"useImportType": "off"
 			}
 		}
 	},
 	"javascript": {
+		"parser": {
+			"unsafeParameterDecoratorsEnabled": false
+		},
 		"formatter": {
 			"quoteStyle": "double"
 		}
