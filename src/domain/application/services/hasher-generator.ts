@@ -1,3 +1,3 @@
 export interface HasherGenerator {
-    generate(plaintext: string): string
+    generate(plaintext: string): Promise<string>;
 }
