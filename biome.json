@@ -27,7 +27,7 @@
 	},
 	"javascript": {
 		"parser": {
-			"unsafeParameterDecoratorsEnabled": false
+			"unsafeParameterDecoratorsEnabled": true
 		},
 		"formatter": {
 			"quoteStyle": "double"
