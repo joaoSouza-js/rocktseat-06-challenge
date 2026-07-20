@@ -2,7 +2,9 @@ import argon2 from "argon2";
 
 import { HasherGenerator } from "@/domain/application/services/hasher-generator";
 import { HasherVerify } from "@/domain/application/services/hasher-verify";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class HasherService implements HasherGenerator, HasherVerify {
     generate(plaintext: string): Promise<string> {
         const hash = argon2.hash(plaintext);

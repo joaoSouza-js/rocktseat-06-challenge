@@ -46,7 +46,7 @@ export class ChangeAccountPasswordUseCase {
         const account = await this.accountRepository.findById(accountId);
         ensureExists(account, "Account");
 
-        const passwordHash = this.hasherGenerator.generate(input.password);
+        const passwordHash = await this.hasherGenerator.generate(input.password);
 
         account.passwordHashed = passwordHash
 

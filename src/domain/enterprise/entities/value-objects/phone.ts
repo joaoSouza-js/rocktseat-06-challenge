@@ -1,3 +1,5 @@
+import { ValidationError } from "@/domain/error/validation-error";
+
 export class PhoneValueObject {
     private constructor(
         private readonly phone: string,
@@ -7,7 +9,7 @@ export class PhoneValueObject {
         const normalized = phone.replace(/\s|-/g, "");
 
         if (!/^\+\d{10,15}$/.test(normalized)) {
-            throw new Error("Invalid phone");
+            throw new ValidationError("Invalid phone");
         }
 
         return new PhoneValueObject(normalized);
