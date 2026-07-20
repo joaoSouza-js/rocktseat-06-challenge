@@ -1,0 +1,57 @@
+import { PrismaClient } from "@/generated/prisma/client"
+import { PrismaPg } from "@prisma/adapter-pg"
+import { randomUUID } from "crypto"
+import { config } from "dotenv"
+import { execSync } from "node:child_process"
+import { afterAll, beforeAll } from "vitest"
+
+
+config({
+    path: ".env",
+    override: true
+})
+
+config({
+    path: ".env.test",
+    override: true
+})
+
+function generateUniqueDataBaseUrl(schemaId: string) {
+
+    const databaseUrl = process.env.DATABASE_URL
+
+    if (!databaseUrl) {
+        throw new Error("DATABASE_URL is not defined")
+    }
+
+    const dbUrl = new URL(databaseUrl)
+    dbUrl.searchParams.set("schema", schemaId)
+    return dbUrl.href
+}
+
+
+let prismaClient: PrismaClient
+
+beforeAll(async () => {
+    const schemaId = randomUUID()
+    const databaseUrl = generateUniqueDataBaseUrl(schemaId)
+    process.env.DATABASE_URL = databaseUrl
+    process.env.SCHEMA_ID = schemaId
+
+    const adapter = new PrismaPg({
+        connectionString: databaseUrl
+    })
+    prismaClient = new PrismaClient({
+        adapter: adapter,
+        log: ["error", "warn"],
+    })
+
+    execSync('npx prisma migrate deploy')
+
+}, 60 * 1000)
+
+afterAll(async () => {
+    await prismaClient.$queryRawUnsafe(`DROP SCHEMA IF EXISTS "${process.env.SCHEMA_ID}" CASCADE`)
+    await prismaClient.$disconnect()
+})
+
