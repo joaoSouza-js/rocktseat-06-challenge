@@ -10,7 +10,7 @@ export class FakeHasher implements HasherGenerator, HasherVerify {
     static readonly instance = new FakeHasher();
 
 
-    generate(plaintext: string): string {
+    async generate(plaintext: string): Promise<string> {
         const passwordHashed = plaintext.concat(this.hash)
         return passwordHashed
     }
