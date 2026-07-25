@@ -8,6 +8,9 @@ import { PermissionPresets } from "@/domain/enterprise/entities/account/presets/
 import { CPFValueObject } from "@/domain/enterprise/entities/account/value-objects/cpf/cpf-value-object.js";
 import { PhoneValueObject } from "@/domain/enterprise/entities/value-objects/phone.js";
 import { fakeBRPhone } from "./fake-phone.js";
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "@/infra/services/prisma.service.js";
+import { PrismaAccountMapper } from "@/infra/database/mappers/prisma-account-mapper.js";
 
 interface makeAccountProps extends Partial<AccountProps> { }
 
@@ -26,4 +29,16 @@ export function makeAccount(props?: makeAccountProps): Account {
     });
 
     return account;
+}
+
+@Injectable()
+export class AccountFactory {
+    constructor(readonly prismaService: PrismaService) { }
+
+    async makePrisma(props?: makeAccountProps): Promise<Account> {
+        const account = makeAccount(props);
+        const accountToPersist = PrismaAccountMapper.toPrisma(account);
+        await this.prismaService.account.create({ data: accountToPersist });
+        return account
+    }
 }

@@ -25,6 +25,15 @@ enum ScheduleDay {
   SUNDAY
 }
 
+enum Availability {
+  AVAILABLE
+  IN_ROUTE
+  OFFLINE
+  ON_BREAK
+  SUSPENDED
+  BUSY
+}
+
 model Account {
   id           String   @id @default(uuid())
   name         String
@@ -41,7 +50,8 @@ model Account {
 }
 
 model Deliverer {
-  id String @id @default(uuid())
+  id           String       @id @default(uuid())
+  availability Availability @default(AVAILABLE)
 
   accountId String  @unique
   account   Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
@@ -54,17 +64,14 @@ model Deliverer {
 }
 
 model DelivererSchedule {
-  id String @id @default(uuid())
-
   delivererId String
   day         ScheduleDay
 
   shiftStart Int
   shiftEnd   Int
+  deliverer  Deliverer @relation(fields: [delivererId], references: [id])
 
-  deliverer Deliverer @relation(fields: [delivererId], references: [id], onDelete: Cascade)
-
-  @@index([delivererId, day])
+  @@id([delivererId, day])
 }
 
 model Recipient {

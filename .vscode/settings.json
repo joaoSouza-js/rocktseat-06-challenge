@@ -5,5 +5,14 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.biome": "always",
 		"source.removeUnusedImports": "always"
+	},
+	"cSpell.words": ["Encrypter"],
+	"material-icon-theme.activeIconPack": "nest",
+
+	"material-icon-theme.files.associations": {
+		"*.use-case.ts": "nest"
+	},
+	"material-icon-theme.folders.associations": {
+		"presenter": "interface"
 	}
 }

@@ -24,9 +24,10 @@ export class Deliverer extends Entity<DelivererProps> {
         });
     }
 
-    static rehydrate(props: DelivererProps): Deliverer {
-        return new Deliverer(props);
+    static rehydrate(props: DelivererProps, id: UniqueEntityId): Deliverer {
+        return new Deliverer(props, id);
     }
+
 
     get accountId(): UniqueEntityId {
         return this.props.accountId;

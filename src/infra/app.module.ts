@@ -6,6 +6,7 @@ import { HttpModule } from './modules/http.module';
 import { APP_PIPE, APP_FILTER } from '@nestjs/core';
 import { PrismaExceptionFilter } from './filters/prisma-exception-filter';
 import { UseCaseExceptionFilter } from './filters/use-case-exception-filter';
+import { PrismaService } from './services/prisma.service';
 
 @Module({
   imports: [
@@ -16,9 +17,11 @@ import { UseCaseExceptionFilter } from './filters/use-case-exception-filter';
     ApiConfigModule,
     HttpModule,
 
+
   ],
 
   providers: [
+    PrismaService,
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({

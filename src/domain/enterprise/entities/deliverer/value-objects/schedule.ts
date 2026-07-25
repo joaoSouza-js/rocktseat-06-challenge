@@ -1,8 +1,13 @@
-import type { WeekDay } from "../enum/week-day.js";
-import { WeeklyPreset } from "../presets/weekly-preset.js";
+import { WeekDay } from "../enum/week-day.js";
+
+interface ScheduleDayProps {
+    day: WeekDay;
+    shiftStart: number;
+    shiftEnd: number;
+}
 
 interface ScheduleProps {
-    days: WeekDay[];
+    days: ScheduleDayProps[];
 }
 
 export class ScheduleValueObject {
@@ -17,24 +22,56 @@ export class ScheduleValueObject {
 
         return new ScheduleValueObject(props);
     }
+
     static businessDays(): ScheduleValueObject {
         return new ScheduleValueObject({
-            days: WeeklyPreset.BUSINESS_DAYS
-        })
+            days: [
+                {
+                    day: WeekDay.MONDAY,
+                    shiftStart: 480,
+                    shiftEnd: 1080,
+                },
+                {
+                    day: WeekDay.TUESDAY,
+                    shiftStart: 480,
+                    shiftEnd: 1080,
+                },
+                {
+                    day: WeekDay.WEDNESDAY,
+                    shiftStart: 480,
+                    shiftEnd: 1080,
+                },
+                {
+                    day: WeekDay.THURSDAY,
+                    shiftStart: 480,
+                    shiftEnd: 1080,
+                },
+                {
+                    day: WeekDay.FRIDAY,
+                    shiftStart: 480,
+                    shiftEnd: 1080,
+                },
+            ],
+        });
     }
 
-
-    static allDays(): ScheduleValueObject {
-        return new ScheduleValueObject({
-            days: WeeklyPreset.ALL_DAYS
-        })
+    static rehydrate(props: ScheduleProps): ScheduleValueObject {
+        return new ScheduleValueObject(props);
     }
 
-    get days(): WeekDay[] {
+    get days(): ScheduleDayProps[] {
         return [...this.props.days];
     }
 
     worksOn(day: WeekDay): boolean {
-        return this.props.days.includes(day);
+        return this.props.days.some(
+            scheduleDay => scheduleDay.day === day
+        );
+    }
+
+    getDay(day: WeekDay): ScheduleDayProps | undefined {
+        return this.props.days.find(
+            scheduleDay => scheduleDay.day === day
+        );
     }
 }

@@ -3,12 +3,16 @@ import { CPFValueObject } from "@/domain/enterprise/entities/account/value-objec
 import { CredentialsInvalid } from "@/domain/error/credentials-invalid.js";
 import type { AccountRepository } from "../repositories/account-repository.js";
 import type { HasherVerify } from "../services/hasher-verify.js";
+import { AccessTokenEncrypter } from "../services/cryptography/access-token-encrypter .js";
+import { RefreshTokenEncrypter } from "../services/cryptography/refresh-token-encrypter .js";
 
 interface Repositories {
     accountRepository: AccountRepository;
 }
 interface Services {
     hasherVerify: HasherVerify;
+    accessTokenEncrypter: AccessTokenEncrypter,
+    refreshTokenEncrypter: RefreshTokenEncrypter
 }
 interface AuthenticationAccountUseCaseDeps {
     repositories: Repositories;
@@ -22,14 +26,20 @@ export interface AuthenticationUseCaseInput {
 
 export interface AuthenticationUseCaseResponse {
     account: Account;
+    token: string
+    refresh_token: string
 }
 export class AuthenticationUseCase {
     private accountRepository: AccountRepository;
     private hasherVerify: HasherVerify;
+    private accessTokenEncrypter: AccessTokenEncrypter
+    private refreshTokenEncrypter: RefreshTokenEncrypter
 
     constructor(deps: AuthenticationAccountUseCaseDeps) {
         this.accountRepository = deps.repositories.accountRepository;
         this.hasherVerify = deps.services.hasherVerify;
+        this.accessTokenEncrypter = deps.services.accessTokenEncrypter
+        this.refreshTokenEncrypter = deps.services.refreshTokenEncrypter
     }
 
     async execute(
@@ -52,9 +62,19 @@ export class AuthenticationUseCase {
         }
 
         const account = accountAlreadyExist;
+        const token = await this.accessTokenEncrypter.encryptToken({
+            sub: account.id.toString(),
+            permissions: account.permissions
+        })
+        const refreshToken = await this.refreshTokenEncrypter.encryptRefreshToken({
+            sub: account.id.toString(),
+            permissions: account.permissions
+        })
 
         return {
             account: account,
+            token,
+            refresh_token: refreshToken
         };
     }
 }

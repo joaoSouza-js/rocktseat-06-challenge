@@ -27,6 +27,9 @@ class EnvironmentVariables {
     @IsString()
     SCHEMA_ID!: string
 
+    @IsString()
+    JWT_SECRET_KEY!: string
+
 
 
 }

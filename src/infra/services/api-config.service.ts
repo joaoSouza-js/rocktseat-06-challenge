@@ -21,6 +21,10 @@ export class ApiConfigService {
         return process.env.SCHEMA_ID!
     }
 
+    get jwtAccessSecret(): string {
+        return this.configService.getOrThrow<string>('JWT_SECRET_KEY');
+    }
+
 
 
 

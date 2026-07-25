@@ -16,9 +16,17 @@ export class AvailabilityValueObject {
         return new AvailabilityValueObject(value);
     }
 
-    static available(): AvailabilityValueObject {
-        return new AvailabilityValueObject(Availability.AVAILABLE);
+    static available(availability: Availability): AvailabilityValueObject {
+        return new AvailabilityValueObject(availability);
 
+    }
+
+    static rehydrate(props: any): AvailabilityValueObject {
+        return new AvailabilityValueObject(props.current);
+    }
+
+    static inRoute(): AvailabilityValueObject {
+        return new AvailabilityValueObject(Availability.IN_ROUTE);
     }
 
     get current(): Availability {

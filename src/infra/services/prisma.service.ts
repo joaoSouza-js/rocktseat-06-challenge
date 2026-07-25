@@ -1,10 +1,11 @@
 import { PrismaClient } from '@/generated/prisma/client';
-import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Global, Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { ApiConfigService } from './api-config.service';
 
 
 @Injectable()
+@Global()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
 
     constructor(apiConfigService: ApiConfigService) {
