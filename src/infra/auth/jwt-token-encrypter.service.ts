@@ -2,14 +2,12 @@ import { AccessTokenEncrypter, AccessTokenEncrypterPayload } from "@/domain/appl
 import { RefreshTokenEncrypter, RefreshTokenEncrypterPayload } from "@/domain/application/services/cryptography/refresh-token-encrypter ";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { ApiConfigService } from "../services/api-config.service";
 
 @Injectable()
 export class JwtTokenEncrypterService
     implements AccessTokenEncrypter, RefreshTokenEncrypter {
     constructor(
         private readonly jwt: JwtService,
-        private readonly config: ApiConfigService,
     ) { }
 
     encryptToken(payload: AccessTokenEncrypterPayload) {
@@ -19,7 +17,6 @@ export class JwtTokenEncrypterService
                 permissions: payload.permissions,
             },
             {
-                secret: this.config.jwtAccessSecret,
                 expiresIn: "7d",
             },
         );
@@ -32,7 +29,6 @@ export class JwtTokenEncrypterService
                 permissions: payload.permissions,
             },
             {
-                secret: this.config.jwtAccessSecret,
                 expiresIn: "30d",
             },
         );
