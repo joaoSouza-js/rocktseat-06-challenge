@@ -9,6 +9,7 @@ import { DataBaseModule } from "../modules/data-base.module";
 import { AuthenticationController } from "./authentication.controller";
 import { NestAuthenticationUseCase } from "../http/use-case/nest-authentication.use-case";
 import { HasherService } from "../services/hasher.service";
+import { JwtAuthGuard } from "./guard/jwt-auth.guard";
 
 
 @Module({
@@ -16,7 +17,12 @@ import { HasherService } from "../services/hasher.service";
         PassportModule,
         DataBaseModule,
 
-        JwtModule.register({}),
+        JwtModule.registerAsync({
+            inject: [ApiConfigService],
+            useFactory: (apiConfigService: ApiConfigService) => ({
+                secret: apiConfigService.jwtAccessSecret,
+            }),
+        })
     ],
 
     providers: [
@@ -25,7 +31,8 @@ import { HasherService } from "../services/hasher.service";
         JwtStrategy,
         JwtRefreshStrategy,
         NestAuthenticationUseCase,
-        HasherService
+        HasherService,
+        JwtAuthGuard
     ],
 
     exports: [
