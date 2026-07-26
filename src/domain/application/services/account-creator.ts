@@ -34,7 +34,6 @@ export class AccountCreatorService {
         if (accountAlreadyExist) {
             throw new ResourceAlreadyExist(user.cpf);
         }
-        console.log(input.user.phone)
         const phone = PhoneValueObject.create(input.user.phone)
 
         const account = Account.create({

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { CredentialsInvalid } from "@/domain/error/credentials-invalid.js";
 import { makeAccount } from "@/test/factory/make-account.js";
 import { AccountRepositoryInMemory } from "@/test/repositories/account-repository-in-memory.js";
@@ -24,14 +24,21 @@ describe("authentication use case ", () => {
                 accountRepository: accountRepository,
             },
             services: {
-                hasherVerify: hasherVerify,
-            },
+                hasherVerify,
+                refreshTokenEncrypter: {
+                    encryptRefreshToken: vi.fn().mockResolvedValue("refreshToken"),
+                },
+                accessTokenEncrypter: {
+                    encryptToken: vi.fn().mockResolvedValue("token"),
+                },
+            }
         });
     });
 
     it("should authenticate ", async () => {
         const password = "password";
-        const passwordHash = hasherGenerator.generate(password);
+        const passwordHash = await hasherGenerator.generate(password);
+
         const account = makeAccount({
             passwordHash: passwordHash,
         });
@@ -47,7 +54,7 @@ describe("authentication use case ", () => {
 
     it("should throw when account does not exist", async () => {
         const password = "password";
-        const passwordHash = hasherGenerator.generate(password);
+        const passwordHash = await hasherGenerator.generate(password);
         const account = makeAccount({
             passwordHash: passwordHash,
         });
@@ -62,7 +69,7 @@ describe("authentication use case ", () => {
 
     it("should throw when password is invalid", async () => {
         const password = "password";
-        const passwordHash = hasherGenerator.generate(password);
+        const passwordHash = await hasherGenerator.generate(password);
 
         const account = makeAccount({
             passwordHash,

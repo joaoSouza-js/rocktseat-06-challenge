@@ -40,7 +40,7 @@ describe("change account password use case", () => {
             password: newPassword,
         });
 
-        const accountPasswordChanged = hasherGenerator.generate(newPassword)
+        const accountPasswordChanged = await hasherGenerator.generate(newPassword)
 
         const accountOnDb = await accountRepository.findById(account.id);
         expect(accountOnDb).toBeTruthy();
