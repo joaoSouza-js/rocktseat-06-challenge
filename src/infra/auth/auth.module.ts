@@ -10,6 +10,8 @@ import { AuthenticationController } from "./authentication.controller";
 import { NestAuthenticationUseCase } from "../http/use-case/nest-authentication.use-case";
 import { HasherService } from "../services/hasher.service";
 import { JwtAuthGuard } from "./guard/jwt-auth.guard";
+import { CreateAccountController } from "../http/controller/account/create-account.controller";
+import { NestCreateAccountUseCase } from "../http/use-case/nest-create-account.use-case";
 
 
 @Module({
@@ -22,7 +24,7 @@ import { JwtAuthGuard } from "./guard/jwt-auth.guard";
             useFactory: (apiConfigService: ApiConfigService) => ({
                 secret: apiConfigService.jwtAccessSecret,
             }),
-        })
+        }),
     ],
 
     providers: [
@@ -31,6 +33,7 @@ import { JwtAuthGuard } from "./guard/jwt-auth.guard";
         JwtStrategy,
         JwtRefreshStrategy,
         NestAuthenticationUseCase,
+        NestCreateAccountUseCase,
         HasherService,
         JwtAuthGuard
     ],
@@ -40,7 +43,8 @@ import { JwtAuthGuard } from "./guard/jwt-auth.guard";
     ],
 
     controllers: [
-        AuthenticationController
+        AuthenticationController,
+        CreateAccountController,
     ]
 })
 export class AuthModule { }
