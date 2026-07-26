@@ -29,6 +29,9 @@ export class CreateDelivererAccountController {
     @UseGuards(JwtAuthGuard)
     @HttpCode(201)
     async handler(@CurrentUser() user: CurrentUserPayload, @Body() body: CreateDelivererAccountControllerBody,) {
+
+
+
         return {
             user,
             body

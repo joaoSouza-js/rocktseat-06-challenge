@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { ApiConfigService } from "../services/api-config.service";
-import { JwtStrategy } from "@/domain/application/services/auth/jwt.strategy";
+import { JwtStrategy } from "@/infra/auth/jwt.strategy";
 import { JwtRefreshStrategy } from "./jwt-refresh.strategy.service";
 import { JwtTokenEncrypterService } from "./jwt-token-encrypter.service";
 import { DataBaseModule } from "../modules/data-base.module";

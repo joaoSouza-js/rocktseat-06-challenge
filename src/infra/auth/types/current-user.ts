@@ -1,4 +1,4 @@
 export interface CurrentUserPayload {
-    accountId: string;
+    sub: string;
     permissions: string[];
 };
