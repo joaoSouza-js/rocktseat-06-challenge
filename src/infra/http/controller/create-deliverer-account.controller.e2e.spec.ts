@@ -35,7 +35,9 @@ describe('Create deliver account controller (e2e)', () => {
         const agent = request(app.getHttpServer())
         const delivererCpf = '52998224725'
         const delivererCpfValueObject = CPFValueObject.rehydrate(delivererCpf)
-        const actorAccount = await accountFactory.makePrisma()
+        const actorAccount = await accountFactory.makePrisma({
+
+        })
 
         const token = jwtService.sign({
             sub: actorAccount.id.toString(),
@@ -52,12 +54,9 @@ describe('Create deliver account controller (e2e)', () => {
         }).set({
             Authorization: `Bearer ${token}`
         })
+        expect(response.statusCode).toBe(201)
 
         const delivererPersisted = await prismaAccountRepository.findByCpf(delivererCpfValueObject)
-
         expect(delivererPersisted).toBeTruthy()
-
-
-        expect(response.statusCode).toBe(201)
     });
 });
