@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { IsString } from "class-validator";
 import { NestAuthenticationUseCase } from "../http/use-case/nest-authentication.use-case";
-import { AccountPresenter } from "../presenter/account.presenter";
+import { AccountPresenter } from "../http/presenter/account.presenter";
 
 class CreateAccountControllerBody {
 

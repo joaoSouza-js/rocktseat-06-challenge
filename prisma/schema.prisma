@@ -89,7 +89,7 @@ model Recipient {
 model Deliver {
   id String @id @default(uuid())
 
-  delivererId String
+  delivererId String?
   recipientId String
 
   latitude  Float
@@ -98,8 +98,8 @@ model Deliver {
   status  DeliveryStatus @default(PENDING)
   address String
 
-  deliverer Deliverer @relation(fields: [delivererId], references: [id], onDelete: Restrict)
-  recipient Recipient @relation(fields: [recipientId], references: [id], onDelete: Restrict)
+  deliverer Deliverer? @relation(fields: [delivererId], references: [id], onDelete: Restrict)
+  recipient Recipient  @relation(fields: [recipientId], references: [id], onDelete: Restrict)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

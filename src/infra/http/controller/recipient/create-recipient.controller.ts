@@ -4,11 +4,11 @@ import { JwtAuthGuard } from "@/infra/auth/guard/jwt-auth.guard";
 import { CurrentUser } from "@/infra/auth/current-user.decorator";
 import type { CurrentUserPayload } from "@/infra/auth/types/current-user";
 import { NestCreateRecipientUseCase } from "../../use-case/recipient/nest-create-recipient.use-case";
-import { RecipientPresenter } from "@/infra/presenter/recipient.presenter";
+import { RecipientPresenter } from "@/infra/http/presenter/recipient.presenter";
 
 
 
-class CreateDelivererAccountControllerBody {
+class CreateRecipientAccountControllerBody {
     @IsString()
     name!: string
 
@@ -25,7 +25,7 @@ export class CreateRecipientAccountController {
     @Post('/recipient')
     @UseGuards(JwtAuthGuard)
     @HttpCode(201)
-    async handler(@CurrentUser() user: CurrentUserPayload, @Body() body: CreateDelivererAccountControllerBody,) {
+    async handler(@CurrentUser() user: CurrentUserPayload, @Body() body: CreateRecipientAccountControllerBody,) {
 
         const response = await this.useCase.execute({
             actorId: user.sub,

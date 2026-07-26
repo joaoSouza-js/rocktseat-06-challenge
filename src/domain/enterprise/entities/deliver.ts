@@ -11,7 +11,7 @@ export enum DeliverStatus {
 }
 
 export interface DeliverProps {
-    delivererId: UniqueEntityId,
+    delivererId?: UniqueEntityId,
     recipientId: UniqueEntityId,
     status: DeliverStatus,
     location: LocationValueObject,
@@ -19,7 +19,7 @@ export interface DeliverProps {
 }
 
 interface CreateDeliverProps {
-    delivererId: UniqueEntityId,
+    delivererId?: UniqueEntityId,
     recipientId: UniqueEntityId,
     location: LocationValueObject,
 
@@ -49,7 +49,7 @@ export class Deliver extends Entity<DeliverProps> {
         this.touch()
     }
 
-    get deliveryId(): UniqueEntityId {
+    get deliveryId(): UniqueEntityId | undefined {
         return this.props.delivererId
     }
 
