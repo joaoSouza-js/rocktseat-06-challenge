@@ -35,6 +35,11 @@ export class Deliver extends Entity<DeliverProps> {
         return deliver
     }
 
+    static rehydrate(input: DeliverProps, id: UniqueEntityId): Deliver {
+        const deliver = new Deliver(input, id)
+        return deliver
+    }
+
     private touch() {
         this.props.updatedAt = new Date()
     }
