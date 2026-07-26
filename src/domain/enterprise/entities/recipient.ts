@@ -9,16 +9,14 @@ export interface RecipientProps {
 }
 
 interface CreateRecipientInput {
-    accountId: UniqueEntityId;
+    accountId?: UniqueEntityId;
     name: string;
-    address: string;
     phone: PhoneValueObject;
 }
 
 export class Recipient extends Entity<RecipientProps> {
     static create(input: CreateRecipientInput): Recipient {
         return new Recipient({
-            accountId: input.accountId,
             name: input.name,
             phone: input.phone,
         });
