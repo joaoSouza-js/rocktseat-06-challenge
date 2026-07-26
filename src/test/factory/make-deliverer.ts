@@ -36,7 +36,6 @@ export class DelivererFactory {
     async makePrisma(props?: makeDelivererProps): Promise<Deliverer> {
         const deliverer = makeDeliverer(props);
         const delivererToPersist = PrismaDelivererMapper.toPrisma(deliverer);
-        console.log("persist", delivererToPersist.id);
         await this.prismaService.deliverer.create({ data: delivererToPersist });
         return deliverer
     }
