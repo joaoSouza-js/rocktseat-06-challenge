@@ -7,6 +7,7 @@ import { NestDeleteDelivererUseCase } from "../http/use-case/nest-delete-deliver
 import { NestCreateRecipientUseCase } from "../http/use-case/recipient/nest-create-recipient.use-case";
 import { NestDeleteRecipientUseCase } from "../http/use-case/recipient/nest-delete-recipient.use-case";
 import { NestCreateDeliverUseCase } from "../http/use-case/deliver/nest-create-deliver.use-case";
+import { NestDeleteDeliverUseCase } from "../http/use-case/deliver/nest-delete-deliver.use-case";
 
 @Module({
     imports: [DataBaseModule],
@@ -17,7 +18,8 @@ import { NestCreateDeliverUseCase } from "../http/use-case/deliver/nest-create-d
         NestDeleteDelivererUseCase,
         NestCreateRecipientUseCase,
         NestDeleteRecipientUseCase,
-        NestCreateDeliverUseCase
+        NestCreateDeliverUseCase,
+        NestDeleteDeliverUseCase
     ],
     exports: [
         NestCreateAccountUseCase,
@@ -25,7 +27,8 @@ import { NestCreateDeliverUseCase } from "../http/use-case/deliver/nest-create-d
         NestDeleteDelivererUseCase,
         NestCreateRecipientUseCase,
         NestDeleteRecipientUseCase,
-        NestCreateDeliverUseCase
+        NestCreateDeliverUseCase,
+        NestDeleteDeliverUseCase
     ],
 })
 export class NestUseCaseModule { }

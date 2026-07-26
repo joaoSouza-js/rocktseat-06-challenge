@@ -41,7 +41,6 @@ export class DeleteDelivererUseCase {
         DelivererPolicy.assertCanDelete(actorAccount);
 
         const delivererId = UniqueEntityId.rehydrate(input.delivererId);
-        console.log(delivererId);
         const deliverer = await this.delivererRepository.findById(delivererId);
         ensureExists(deliverer, "Deliverer");
 

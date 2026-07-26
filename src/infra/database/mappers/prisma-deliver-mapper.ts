@@ -3,9 +3,7 @@ import { Deliver, DeliverStatus } from "@/domain/enterprise/entities/deliver";
 import { LocationValueObject } from "@/domain/enterprise/entities/value-objects/location";
 import { $Enums } from "@/generated/prisma/client";
 import {
-    DeliverCreateInput,
-    DelivererCreateNestedOneWithoutDeliveriesInput,
-    DeliverModel,
+    DeliverCreateInput, DelivererCreateNestedOneWithoutDeliveriesInput, DeliverModel
 } from "@/generated/prisma/models";
 
 export class PrismaDeliverMapper {
@@ -52,13 +50,10 @@ export class PrismaDeliverMapper {
                     id: deliver.recipientId.toString(),
                 },
             },
-
             latitude: deliver.location.latitude,
             longitude: deliver.location.longitude,
-
             status: $Enums.DeliveryStatus[deliver.status],
         };
-
         return model;
     }
 }

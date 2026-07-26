@@ -6,17 +6,17 @@ import { CreateDelivererAccountController } from "../http/controller/create-deli
 import { DeleteDelivererAccountController } from "../http/controller/delete-deliverer-account.controller";
 import { CreateRecipientAccountController } from "../http/controller/recipient/create-recipient.controller";
 import { DeleteRecipientAccountController } from "../http/controller/recipient/delete-recipient.controller";
-import { CreateDeliverAccountController } from "../http/controller/deliver/create-deliver.controller";
+import { HttpDeliverModule } from "./http-deliver.module";
 
 @Module({
-    imports: [NestUseCaseModule, AuthModule],
+    imports: [NestUseCaseModule, AuthModule, HttpDeliverModule],
     controllers: [
         CreateAccountController,
         CreateDelivererAccountController,
         DeleteDelivererAccountController,
         CreateRecipientAccountController,
         DeleteRecipientAccountController,
-        CreateDeliverAccountController
+
     ],
 })
 export class HttpModule { }

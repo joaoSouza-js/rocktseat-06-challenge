@@ -49,7 +49,6 @@ describe('Delete deliver account controller (e2e)', () => {
             Authorization: `Bearer ${token}`
         })
 
-        console.log(response.body);
 
         expect(response.statusCode).toBe(204)
 

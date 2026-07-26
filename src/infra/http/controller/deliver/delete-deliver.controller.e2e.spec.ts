@@ -1,6 +1,8 @@
+import { PermissionType } from '@/domain/enterprise/entities/account/enums/permissions-type';
 import { AppModule } from '@/infra/app.module';
 import { PrismaDeliverRepository } from '@/infra/database/repositories/prisma-deliver-repository';
 import { AccountFactory } from '@/test/factory/make-account';
+import { DeliverFactory } from '@/test/factory/make-deliver';
 import { RecipientFactory } from '@/test/factory/make-recipient';
 
 import { INestApplication } from '@nestjs/common';
@@ -16,12 +18,12 @@ describe('Create deliver (e2e)', () => {
     let prismaDeliverRepository: PrismaDeliverRepository
     let accountFactory: AccountFactory
     let recipientFactory: RecipientFactory
-    let prismaDelivererRepository: PrismaDeliverRepository
+    let deliverFactory: DeliverFactory
 
     beforeAll(async () => {
         const moduleRef = await Test.createTestingModule({
             imports: [AppModule],
-            providers: [AccountFactory, RecipientFactory]
+            providers: [AccountFactory, RecipientFactory, DeliverFactory]
         }).compile();
 
         app = moduleRef.createNestApplication();
@@ -31,35 +33,31 @@ describe('Create deliver (e2e)', () => {
         jwtService = app.get(JwtService)
         prismaDeliverRepository = app.get(PrismaDeliverRepository)
         recipientFactory = app.get(RecipientFactory)
+        deliverFactory = app.get(DeliverFactory)
         await app.init();
     });
 
-    test('[POST] /deliver', async () => {
+    test('[DELETE] /deliver/:id', async () => {
         const agent = request(app.getHttpServer())
-        const actorAccount = await accountFactory.makePrisma()
+        const actorAccount = await accountFactory.makePrisma({
+            permissions: [PermissionType.DELIVER_DELETE]
+        })
         const recipient = await recipientFactory.makePrisma()
+        const deliverer = await deliverFactory.makePrisma({ recipientId: recipient.id })
+
         const token = jwtService.sign({
             sub: actorAccount.id.toString(),
             permissions: actorAccount.permissions
         })
 
-        const response = await agent.post('/deliver').send(
-            {
-                "name": "John Doe",
-                "phone": "+5511999999999",
-                "recipientId": recipient.id.toString(),
-                "address": "Rua Example, 123, São Paulo",
-                "latitude": -23.55052,
-                "longitude": -46.633308
-            }
-        ).set({
+        const response = await agent.delete(`/deliver/${deliverer.id.toString()}`).send().set({
             Authorization: `Bearer ${token}`
         })
 
-        expect(response.statusCode).toBe(201)
+        expect(response.statusCode).toBe(204)
 
-        const deliverPersisted = await prismaDeliverRepository.findById(response.body.deliver.id)
-        expect(deliverPersisted).toBeTruthy()
+        const deliverPersisted = await prismaDeliverRepository.findById(deliverer.id)
+        expect(deliverPersisted).toBeNull()
 
     });
 });
