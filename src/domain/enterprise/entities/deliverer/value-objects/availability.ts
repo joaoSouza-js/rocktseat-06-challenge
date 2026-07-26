@@ -16,13 +16,13 @@ export class AvailabilityValueObject {
         return new AvailabilityValueObject(value);
     }
 
-    static available(availability: Availability): AvailabilityValueObject {
-        return new AvailabilityValueObject(availability);
+    static available(): AvailabilityValueObject {
+        return new AvailabilityValueObject(Availability.AVAILABLE);
 
     }
 
-    static rehydrate(props: any): AvailabilityValueObject {
-        return new AvailabilityValueObject(props.current);
+    static rehydrate(props: Availability): AvailabilityValueObject {
+        return new AvailabilityValueObject(props);
     }
 
     static inRoute(): AvailabilityValueObject {

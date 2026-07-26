@@ -1,6 +1,7 @@
+import { CPFValueObject } from '@/domain/enterprise/entities/account/value-objects/cpf/cpf-value-object';
 import { AppModule } from '@/infra/app.module';
 import { PrismaAccountRepository } from '@/infra/database/repositories/prisma-account-repository';
-import { ApiConfigService } from '@/infra/services/api-config.service';
+import { HasherService } from '@/infra/services/hasher.service';
 import { AccountFactory } from '@/test/factory/make-account';
 
 import { INestApplication } from '@nestjs/common';
@@ -15,27 +16,25 @@ describe('Create deliver account controller (e2e)', () => {
     let jwtService: JwtService
     let prismaAccountRepository: PrismaAccountRepository
     let accountFactory: AccountFactory
-    let apiConfigService: ApiConfigService
 
     beforeAll(async () => {
         const moduleRef = await Test.createTestingModule({
             imports: [AppModule],
-            providers: [AccountFactory]
+            providers: [AccountFactory, HasherService]
         }).compile();
 
         app = moduleRef.createNestApplication();
 
         prismaAccountRepository = app.get(PrismaAccountRepository)
         accountFactory = app.get(AccountFactory)
-        apiConfigService = app.get(ApiConfigService)
         jwtService = app.get(JwtService)
         await app.init();
     });
 
     test('[POST] /deliverer', async () => {
         const agent = request(app.getHttpServer())
-        const cpf = '52998224725'
-
+        const delivererCpf = '52998224725'
+        const delivererCpfValueObject = CPFValueObject.rehydrate(delivererCpf)
         const actorAccount = await accountFactory.makePrisma()
 
         const token = jwtService.sign({
@@ -43,16 +42,21 @@ describe('Create deliver account controller (e2e)', () => {
             permissions: actorAccount.permissions
         })
 
+
+
         const response = await agent.post('/deliverer').send({
             name: 'John Doe',
             phone: '+5511999999999',
-            cpf: cpf,
+            cpf: delivererCpf,
             password: '123456',
         }).set({
             Authorization: `Bearer ${token}`
         })
 
-        console.log(response.body)
+        const delivererPersisted = await prismaAccountRepository.findByCpf(delivererCpfValueObject)
+
+        expect(delivererPersisted).toBeTruthy()
+
 
         expect(response.statusCode).toBe(201)
     });

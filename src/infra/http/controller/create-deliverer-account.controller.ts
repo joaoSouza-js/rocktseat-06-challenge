@@ -30,7 +30,13 @@ export class CreateDelivererAccountController {
     @HttpCode(201)
     async handler(@CurrentUser() user: CurrentUserPayload, @Body() body: CreateDelivererAccountControllerBody,) {
 
-
+        await this.useCase.execute({
+            actorId: user.sub,
+            cpf: body.cpf,
+            name: body.name,
+            phone: body.phone,
+            password: body.password
+        })
 
         return {
             user,
