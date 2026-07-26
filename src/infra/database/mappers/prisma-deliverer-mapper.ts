@@ -64,7 +64,7 @@ export class PrismaDelivererMapper {
                     id: deliverer.accountId.toString(),
                 },
             },
-
+            id: deliverer.id.toString(),
             availability:
                 $Enums.Availability[deliverer.availability.current],
 
