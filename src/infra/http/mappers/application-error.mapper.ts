@@ -3,13 +3,16 @@ import { CredentialsInvalid } from "@/domain/error/credentials-invalid";
 import { MissingPermissionError } from "@/domain/error/missing-permission-error";
 import { ResourceAlreadyExist } from "@/domain/error/resource-already-exist";
 import { ValidationError } from "@/domain/error/validation-error";
-import { BadRequestException, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, ConflictException, ForbiddenException, UnauthorizedException } from "@nestjs/common";
 
+
+type ErrorConstructor<T extends ApplicationError> = new (...args: never[]) => T;
 
 type ErrorMapping<T extends ApplicationError = ApplicationError> = {
-    match: new (...args: any[]) => T;
+    match: ErrorConstructor<T>;
     handler: (error: T) => Error;
 };
+
 
 const errorMappings: ErrorMapping[] = [
     {
@@ -18,7 +21,7 @@ const errorMappings: ErrorMapping[] = [
     },
     {
         match: MissingPermissionError,
-        handler: (err) => new UnauthorizedException(err.message),
+        handler: (err) => new ForbiddenException(err.message),
     },
     {
         match: ValidationError,
@@ -26,10 +29,9 @@ const errorMappings: ErrorMapping[] = [
     },
     {
         match: ResourceAlreadyExist,
-        handler: (err) => new BadRequestException(err.message),
-    }
+        handler: (err) => new ConflictException(err.message),
+    },
 ];
-
 export function mapApplicationError(exception: ApplicationError): Error {
     for (const { match, handler } of errorMappings) {
         if (exception instanceof match) {

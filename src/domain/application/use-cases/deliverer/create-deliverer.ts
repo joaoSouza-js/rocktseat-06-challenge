@@ -70,10 +70,6 @@ export class CreateDelivererUseCase {
             availability: AvailabilityValueObject.available(),
         });
 
-        console.log(JSON.stringify(deliverer));
-
-
-
 
         await this.delivererRepository.create(deliverer);
 
