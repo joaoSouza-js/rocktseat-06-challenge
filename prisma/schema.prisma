@@ -13,6 +13,7 @@ enum DeliveryStatus {
   IN_TRANSIT
   DELIVERED
   CANCELLED
+  RETURNED
 }
 
 enum ScheduleDay {

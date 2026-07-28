@@ -12,10 +12,10 @@ import { makeDeliver } from "@/test/factory/make-deliver.js";
 import { DeliverStatus } from "@/domain/enterprise/entities/deliver.js";
 import { MarkDeliverReturnedUseCase } from "./mark-deliver-returned.js";
 
-describe("mark deliver returned use case ", () => {
+describe("mark deliver returned use case", () => {
     let deliverRepository: DeliverRepository;
     let delivererRepository: DelivererRepository;
-    let accountRepository: AccountRepository
+    let accountRepository: AccountRepository;
     let sut: MarkDeliverReturnedUseCase;
 
     beforeEach(() => {
@@ -25,62 +25,64 @@ describe("mark deliver returned use case ", () => {
 
         sut = new MarkDeliverReturnedUseCase({
             repositories: {
-                deliverRepository: deliverRepository,
-                delivererRepository: delivererRepository,
-                accountRepository: accountRepository
+                deliverRepository,
+                delivererRepository,
+                accountRepository,
             },
         });
     });
 
-    it("should update deliver as returned ", async () => {
+    it("should update deliver as returned", async () => {
         const account = makeAccount({
-            permissions: PermissionPresets.deliver
-        })
+            permissions: PermissionPresets.deliver,
+        });
+
         const deliverer = makeDeliverer({
-            accountId: account.id
+            accountId: account.id,
         });
+
         const deliver = makeDeliver({
-            delivererId: deliverer.id
+            delivererId: deliverer.id,
         });
+
+        await accountRepository.create(account);
         await delivererRepository.create(deliverer);
         await deliverRepository.create(deliver);
-        await accountRepository.create(account);
 
         const response = await sut.execute({
+            actorId: account.id.toString(),
             deliverId: deliver.id.toString(),
-            delivererId: deliverer.id.toString(),
-
         });
 
-        expect(response.deliver.status).toEqual(DeliverStatus.RETURNED)
-
-
+        expect(response.deliver.status).toEqual(DeliverStatus.RETURNED);
     });
 
     it("should update deliver as returned on database", async () => {
         const account = makeAccount({
-            permissions: PermissionPresets.deliver
-        })
+            permissions: PermissionPresets.deliver,
+        });
+
         const deliverer = makeDeliverer({
-            accountId: account.id
+            accountId: account.id,
         });
+
         const deliver = makeDeliver({
-            delivererId: deliverer.id
+            delivererId: deliverer.id,
         });
+
+        await accountRepository.create(account);
         await delivererRepository.create(deliverer);
         await deliverRepository.create(deliver);
-        await accountRepository.create(account);
 
         const response = await sut.execute({
+            actorId: account.id.toString(),
             deliverId: deliver.id.toString(),
-            delivererId: deliverer.id.toString(),
-
         });
 
-        const deliverOnDb = await deliverRepository.findById(response.deliver.id)
-        expect(deliverOnDb).toBeTruthy()
-        expect(deliverOnDb?.status).toEqual(DeliverStatus.RETURNED)
+        const deliverOnDb = await deliverRepository.findById(response.deliver.id);
 
-    })
+        expect(deliverOnDb?.deliveryId).toBeUndefined();
 
+        expect(deliverOnDb?.status).toEqual(DeliverStatus.RETURNED);
+    });
 });

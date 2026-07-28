@@ -38,7 +38,7 @@ export class PrismaDeliverRepository implements DeliverRepository {
         await this.prismaService.deliver.delete({ where: { id: deliverId } });
     }
     async update(deliver: Deliver): Promise<void> {
-        const data = PrismaDeliverMapper.toPrisma(deliver);
+        const data = PrismaDeliverMapper.updatePrisma(deliver);
         await this.prismaService.deliver.update({ where: { id: deliver.id.toString() }, data });
     }
 }

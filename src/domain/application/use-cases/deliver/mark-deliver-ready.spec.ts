@@ -49,7 +49,8 @@ describe("mark deliver ready use case ", () => {
 
         const response = await sut.execute({
             deliverId: deliver.id.toString(),
-            delivererId: deliverer.id.toString(),
+            actorId: account.id.toString(),
+
 
         });
 
@@ -74,7 +75,7 @@ describe("mark deliver ready use case ", () => {
 
         const response = await sut.execute({
             deliverId: deliver.id.toString(),
-            delivererId: deliverer.id.toString(),
+            actorId: account.id.toString(),
 
         });
 

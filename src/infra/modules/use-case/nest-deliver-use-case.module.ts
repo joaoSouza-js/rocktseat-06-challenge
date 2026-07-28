@@ -4,6 +4,7 @@ import { Module } from "@nestjs/common";
 import { DataBaseModule } from "../data-base.module";
 import { NestAssignDeliverUseCase } from "@/infra/http/use-case/deliver/nest-assinger-deliver.use-case";
 import { NestMarkDeliverDeliveredUseCase } from "@/infra/http/use-case/deliver/nest-mark-deliver-delivered.use-case";
+import { NestReturnDeliverUseCase } from "@/infra/http/use-case/deliver/nest-return-deliver.use-case";
 
 @Module({
     imports: [DataBaseModule],
@@ -11,13 +12,15 @@ import { NestMarkDeliverDeliveredUseCase } from "@/infra/http/use-case/deliver/n
         NestCreateDeliverUseCase,
         NestDeleteDeliverUseCase,
         NestAssignDeliverUseCase,
-        NestMarkDeliverDeliveredUseCase
+        NestMarkDeliverDeliveredUseCase,
+        NestReturnDeliverUseCase
     ],
     exports: [
         NestCreateDeliverUseCase,
         NestDeleteDeliverUseCase,
         NestAssignDeliverUseCase,
-        NestMarkDeliverDeliveredUseCase
+        NestMarkDeliverDeliveredUseCase,
+        NestReturnDeliverUseCase
     ],
 })
 export class NestDeliverUseCaseModule { }

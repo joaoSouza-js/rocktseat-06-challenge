@@ -3,7 +3,7 @@ import { Deliver, DeliverStatus } from "@/domain/enterprise/entities/deliver";
 import { LocationValueObject } from "@/domain/enterprise/entities/value-objects/location";
 import { $Enums } from "@/generated/prisma/client";
 import {
-    DeliverCreateInput, DelivererCreateNestedOneWithoutDeliveriesInput, DeliverModel,
+    DeliverCreateInput, DelivererCreateNestedOneWithoutDeliveriesInput, DelivererUpdateOneWithoutDeliveriesNestedInput, DeliverModel,
     DeliverUpdateInput
 } from "@/generated/prisma/models";
 
@@ -32,6 +32,7 @@ export class PrismaDeliverMapper {
     }
 
     static toPrisma(deliver: Deliver): DeliverCreateInput {
+
         const delivererConnect:
             DelivererCreateNestedOneWithoutDeliveriesInput | undefined =
             deliver.deliveryId
@@ -59,17 +60,14 @@ export class PrismaDeliverMapper {
     }
 
     static updatePrisma(deliver: Deliver): DeliverUpdateInput {
-        const delivererConnect = deliver.deliveryId
-            ? {
-                connect: {
-                    id: deliver.deliveryId.toString(),
-                },
-            }
-            : undefined;
+        const delivererRelation: DelivererUpdateOneWithoutDeliveriesNestedInput = deliver.deliveryId
+            ? { connect: { id: deliver.deliveryId.toString() } }
+            : { disconnect: true };
+
 
         const data: DeliverUpdateInput = {
             address: deliver.location.address ?? "",
-            deliverer: delivererConnect,
+            deliverer: delivererRelation,
             recipient: {
                 connect: {
                     id: deliver.recipientId.toString(),

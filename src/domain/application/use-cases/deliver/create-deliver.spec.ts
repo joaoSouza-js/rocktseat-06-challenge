@@ -66,7 +66,6 @@ describe("create Deliver use case ", () => {
             address: "new street",
             recipientId: recipient.id.toString(),
         });
-        console.log(response)
         const deliverOnDb = await deliverRepository.findById(response.deliver.id)
         expect(deliverOnDb).toBeTruthy()
     })

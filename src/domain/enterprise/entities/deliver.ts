@@ -53,6 +53,14 @@ export class Deliver extends Entity<DeliverProps> {
         this.changeStatus(DeliverStatus.PROGRESS)
     }
 
+    deliverDelivered() {
+        this.changeStatus(DeliverStatus.DELIVERED)
+    }
+
+    deliverReturned() {
+        this.changeStatus(DeliverStatus.RETURNED)
+    }
+
     get deliveryId(): UniqueEntityId | undefined {
         return this.props.delivererId
     }
@@ -71,6 +79,11 @@ export class Deliver extends Entity<DeliverProps> {
 
     assignDeliverer(delivererId: UniqueEntityId) {
         this.props.delivererId = delivererId
+        this.touch()
+    }
+
+    unassignDeliverer() {
+        this.props.delivererId = undefined
         this.touch()
     }
 
