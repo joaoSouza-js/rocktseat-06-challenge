@@ -3,6 +3,14 @@ import type { DelivererRepository } from "@/domain/application/repositories/deli
 import type { Deliverer } from "@/domain/enterprise/entities/deliverer/deliverer-entity.js";
 
 export class DelivererRepositoryInMemory implements DelivererRepository {
+
+    async findByAccountId(accountId: UniqueEntityId): Promise<Deliverer | null> {
+        const delivererFounded = this.deliverers.find((deliverer) => {
+            return deliverer.accountId.equals(accountId);
+        }) || null
+
+        return delivererFounded
+    }
     async delete(id: UniqueEntityId): Promise<void> {
         const delivererIndex = this.deliverers.findIndex((deliverer) => deliverer.id.equals(id));
         this.deliverers.splice(delivererIndex, 1);

@@ -4,6 +4,7 @@ import type { Deliverer } from "@/domain/enterprise/entities/deliverer/deliverer
 export interface DelivererRepository {
     create(deliverer: Deliverer): Promise<void>;
     findById(id: UniqueEntityId): Promise<Deliverer | null>;
+    findByAccountId(accountId: UniqueEntityId): Promise<Deliverer | null>;
     delete(id: UniqueEntityId): Promise<void>;
     update(deliverer: Deliverer): Promise<void>;
 }

@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, Post, UseGuards } from "@nestjs/common";
-import { NestCreateDelivererUseCase } from "../use-case/nest-create-deliverer.use-case";
+import { NestCreateDelivererUseCase } from "../use-case/deliverer/nest-create-deliverer.use-case";
 import { IsString } from "class-validator";
 import { JwtAuthGuard } from "@/infra/auth/guard/jwt-auth.guard";
 import { CurrentUser } from "@/infra/auth/current-user.decorator";

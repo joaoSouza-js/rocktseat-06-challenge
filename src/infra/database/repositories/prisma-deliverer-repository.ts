@@ -8,6 +8,19 @@ import { PrismaService } from "@/infra/services/prisma.service";
 @Injectable()
 export class PrismaDelivererRepository implements DelivererRepository {
     constructor(readonly prismaService: PrismaService) { }
+    async findByAccountId(accountId: UniqueEntityId): Promise<Deliverer | null> {
+        const accountFound = await this.prismaService.deliverer.findUnique({
+            where: {
+                accountId: accountId.toString(),
+            },
+            include: { schedules: true },
+        })
+
+        if (accountFound === null) return null;
+
+        const account = PrismaDelivererMapper.toDomain(accountFound);
+        return account
+    }
 
     async create(deliverer: Deliverer): Promise<void> {
         const delivererModel = PrismaDelivererMapper.toPrisma(deliverer);

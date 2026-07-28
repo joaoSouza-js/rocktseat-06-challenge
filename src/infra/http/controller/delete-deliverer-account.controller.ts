@@ -3,7 +3,7 @@ import { IsString } from "class-validator";
 import { JwtAuthGuard } from "@/infra/auth/guard/jwt-auth.guard";
 import { CurrentUser } from "@/infra/auth/current-user.decorator";
 import type { CurrentUserPayload } from "@/infra/auth/types/current-user";
-import { NestDeleteDelivererUseCase } from "../use-case/nest-delete-deliverer.use-case";
+import { NestDeleteDelivererUseCase } from "../use-case/deliverer/nest-delete-deliverer.use-case";
 
 
 

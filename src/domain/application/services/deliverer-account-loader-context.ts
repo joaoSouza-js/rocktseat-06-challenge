@@ -28,4 +28,20 @@ export class DelivererAccountLoaderContext {
             deliverer: deliverer
         }
     }
+
+    async fromAccountId(accountId: UniqueEntityId): Promise<fromDelivererIdResponse> {
+
+
+        const deliverer = await this.delivererRepository.findByAccountId(accountId)
+        ensureExists(deliverer, "Deliverer");
+
+        const account = await this.accountRepository.findById(accountId);
+        ensureExists(account, "Account");
+
+        return {
+            account: account,
+            deliverer: deliverer
+        }
+
+    }
 }

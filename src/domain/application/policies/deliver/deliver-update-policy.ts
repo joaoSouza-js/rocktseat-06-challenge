@@ -15,6 +15,10 @@ export class DeliverUpdatePolicy {
     static assertCanUpdate(props: DeliverUpdatePolicyProps) {
         const { account, deliver, delivererId } = props;
 
+        if (deliver.deliveryId === undefined) {
+            throw new NotAllowedError()
+        }
+
         const hasPermission = account.hasPermission(PermissionType.DELIVER_UPDATE);
         const isDelivererAssigned = deliver.deliveryId.equals(delivererId);
 
@@ -24,6 +28,16 @@ export class DeliverUpdatePolicy {
 
 
         if (isDelivererAssigned === false) {
+            throw new NotAllowedError()
+        }
+    }
+
+    static assertCanAssignDeliverer(account: Account, deliver: Deliver) {
+        const hasPermission = account.hasPermission(PermissionType.DELIVER_UPDATE);
+        if (hasPermission === false) {
+            throw new MissingPermissionError(PermissionType.DELIVER_UPDATE)
+        }
+        if (deliver.deliveryId) {
             throw new NotAllowedError()
         }
     }

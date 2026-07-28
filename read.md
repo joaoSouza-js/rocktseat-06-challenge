@@ -1,14 +1,14 @@
-[ ] separate use case in use case module
-    [] deliver
-    [] deliverer
-    [] recipient
-    [] account
+[ x] separate use case in use case module
+    [x] deliver
+    [x] deliverer
+    [x] recipient
+    [x] account
 
-[] separate http controller in module 
-     [] deliver
-    [] deliverer
-    [] recipient
-    [] account
+[x] separate http controller in module 
+     [x] deliver
+    [x] deliverer
+    [x] recipient
+    [x] account
 
 [] create controller to deliverer assigner  a deliver
 [] create a controller to mark a deliver as ready to assigner
