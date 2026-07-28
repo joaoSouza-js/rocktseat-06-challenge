@@ -48,8 +48,7 @@ describe("mark deliver delivered use case ", () => {
 
         const response = await sut.execute({
             deliverId: deliver.id.toString(),
-            delivererId: deliverer.id.toString(),
-
+            actorId: account.id.toString(),
         });
 
         expect(response.deliver.status).toEqual(DeliverStatus.DELIVERED)
@@ -73,7 +72,7 @@ describe("mark deliver delivered use case ", () => {
 
         const response = await sut.execute({
             deliverId: deliver.id.toString(),
-            delivererId: deliverer.id.toString(),
+            actorId: account.id.toString(),
 
         });
 
