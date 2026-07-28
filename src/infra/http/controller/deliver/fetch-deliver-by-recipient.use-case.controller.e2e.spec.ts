@@ -11,7 +11,7 @@ import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { beforeAll, describe, expect, test } from 'vitest';
 
-describe('Delete deliver (e2e)', () => {
+describe('fetch recipient deliveries (e2e)', () => {
 
     let app: INestApplication;
     let jwtService: JwtService
@@ -37,27 +37,33 @@ describe('Delete deliver (e2e)', () => {
         await app.init();
     });
 
-    test('[DELETE] /deliver/:id', async () => {
+    test('[GET] /deliveries/recipient/:ID', async () => {
         const agent = request(app.getHttpServer())
         const actorAccount = await accountFactory.makePrisma({
-            permissions: [PermissionType.DELIVER_DELETE]
+            permissions: [PermissionType.DELIVER_VIEW]
         })
         const recipient = await recipientFactory.makePrisma()
-        const deliverer = await deliverFactory.makePrisma({ recipientId: recipient.id })
+
+        const recipientDeliveriesPromise = Array.from({ length: 4 }, () => {
+            const delivererPromise = deliverFactory.makePrisma({ recipientId: recipient.id })
+            return delivererPromise
+        })
+
+        await Promise.all(recipientDeliveriesPromise)
 
         const token = jwtService.sign({
             sub: actorAccount.id.toString(),
             permissions: actorAccount.permissions
         })
 
-        const response = await agent.delete(`/deliver/${deliverer.id.toString()}`).send().set({
+        const response = await agent.get(`/deliveries/recipient/${recipient.id.toString()}`).send().set({
             Authorization: `Bearer ${token}`
         })
 
-        expect(response.statusCode).toBe(204)
+        expect(response.statusCode).toBe(200)
 
-        const deliverPersisted = await prismaDeliverRepository.findById(deliverer.id)
-        expect(deliverPersisted).toBeNull()
+        const deliveriesPersisted = await prismaDeliverRepository.fetchByRecipientId(recipient.id)
 
+        expect(deliveriesPersisted.length).toBe(4)
     });
 });
