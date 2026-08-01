@@ -8,10 +8,10 @@ import { AccountFactory } from '@/test/factory/make-account';
 import { DeliverFactory } from '@/test/factory/make-deliver';
 import { DelivererFactory } from '@/test/factory/make-deliverer';
 import { RecipientFactory } from '@/test/factory/make-recipient';
-
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
+import path from 'node:path';
 import request from 'supertest';
 import { beforeAll, describe, expect, test } from 'vitest';
 
@@ -62,9 +62,16 @@ describe('mark deliver delivered (e2e)', () => {
             permissions: actorAccount.permissions
         })
 
-        const response = await agent.patch(`/deliver/${deliver.id.toString()}/delivered`).send().set({
-            Authorization: `Bearer ${token}`
-        })
+        const attachImage = path.resolve(__dirname, "../../../../test/fixtures/sample-image.jpg")
+
+        const response = await agent.patch(`/deliver/${deliver.id.toString()}/delivered`)
+            .send()
+            .attach('file', attachImage)
+            .set({
+                Authorization: `Bearer ${token}`
+            })
+
+        console.log("error", response.body)
 
 
         expect(response.statusCode).toBe(204)
