@@ -32,7 +32,7 @@ export function makeDeliver(props?: makeDeliverProps) {
 
 @Injectable()
 export class DeliverFactory {
-    constructor(readonly prismaService: PrismaService) { }
+    constructor(private readonly prismaService: PrismaService) { }
 
     async makePrisma(props?: makeDeliverProps): Promise<Deliver> {
         const deliver = makeDeliver(props);

@@ -6,6 +6,7 @@ import { AssignDeliverController } from "@/infra/http/controller/deliver/assign-
 import { MarkDeliverDeliveredUseCaseController } from "@/infra/http/controller/deliver/mark-deliver-delivered.controller";
 import { ReturnDeliverUseCaseController } from "@/infra/http/controller/deliver/return-deliver.controller";
 import { FetchDeliverByRecipientController } from "@/infra/http/controller/deliver/fetch-deliverer-by-recipient.use-case.controller";
+import { FetchDeliverByDeliverController } from "@/infra/http/controller/deliver/fetch-deliver-by-deliverer.use-case.controller";
 
 @Module({
     imports: [NestDeliverUseCaseModule],
@@ -15,7 +16,8 @@ import { FetchDeliverByRecipientController } from "@/infra/http/controller/deliv
         AssignDeliverController,
         MarkDeliverDeliveredUseCaseController,
         ReturnDeliverUseCaseController,
-        FetchDeliverByRecipientController
+        FetchDeliverByRecipientController,
+        FetchDeliverByDeliverController
     ],
 })
 export class HttpDeliverModule { }

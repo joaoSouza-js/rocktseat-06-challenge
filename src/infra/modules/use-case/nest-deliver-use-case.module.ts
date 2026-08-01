@@ -6,6 +6,7 @@ import { NestAssignDeliverUseCase } from "@/infra/http/use-case/deliver/nest-ass
 import { NestMarkDeliverDeliveredUseCase } from "@/infra/http/use-case/deliver/nest-mark-deliver-delivered.use-case";
 import { NestReturnDeliverUseCase } from "@/infra/http/use-case/deliver/nest-return-deliver.use-case";
 import { NestFetchDeliverByRecipientUseCase } from "@/infra/http/use-case/deliver/nest-fetch-deliver-by-recipient.use-case";
+import { NestFetchDeliverByDeliverUseCase } from "@/infra/http/use-case/deliver/nest-deliver-by-deliverer.use-case";
 
 @Module({
     imports: [DataBaseModule],
@@ -15,7 +16,8 @@ import { NestFetchDeliverByRecipientUseCase } from "@/infra/http/use-case/delive
         NestAssignDeliverUseCase,
         NestMarkDeliverDeliveredUseCase,
         NestReturnDeliverUseCase,
-        NestFetchDeliverByRecipientUseCase
+        NestFetchDeliverByRecipientUseCase,
+        NestFetchDeliverByDeliverUseCase
     ],
     exports: [
         NestCreateDeliverUseCase,
@@ -23,7 +25,8 @@ import { NestFetchDeliverByRecipientUseCase } from "@/infra/http/use-case/delive
         NestAssignDeliverUseCase,
         NestMarkDeliverDeliveredUseCase,
         NestReturnDeliverUseCase,
-        NestFetchDeliverByRecipientUseCase
+        NestFetchDeliverByRecipientUseCase,
+        NestFetchDeliverByDeliverUseCase
     ],
 })
 export class NestDeliverUseCaseModule { }
